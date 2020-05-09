@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>3_mxrcnn.lib.mx-rcnn.symimdb.coco API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>3_mxrcnn.lib.mx-rcnn.symimdb.coco</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import json
+import numpy as np
+from builtins import range
+
+from symnet.logger import logger
+from .imdb import IMDB
+
+# coco api
+from pycocotools.coco import COCO
+from pycocotools.cocoeval import COCOeval
+
+
+class coco(IMDB):
+    classes = [&#39;__background__&#39;,  # always index 0
+               &#39;person&#39;, &#39;bicycle&#39;, &#39;car&#39;, &#39;motorcycle&#39;, &#39;airplane&#39;, &#39;bus&#39;, &#39;train&#39;,
+               &#39;truck&#39;, &#39;boat&#39;, &#39;traffic light&#39;, &#39;fire hydrant&#39;, &#39;stop sign&#39;,
+               &#39;parking meter&#39;, &#39;bench&#39;, &#39;bird&#39;, &#39;cat&#39;, &#39;dog&#39;, &#39;horse&#39;, &#39;sheep&#39;,
+               &#39;cow&#39;, &#39;elephant&#39;, &#39;bear&#39;, &#39;zebra&#39;, &#39;giraffe&#39;, &#39;backpack&#39;, &#39;umbrella&#39;,
+               &#39;handbag&#39;, &#39;tie&#39;, &#39;suitcase&#39;, &#39;frisbee&#39;, &#39;skis&#39;, &#39;snowboard&#39;,
+               &#39;sports ball&#39;, &#39;kite&#39;, &#39;baseball bat&#39;, &#39;baseball glove&#39;, &#39;skateboard&#39;,
+               &#39;surfboard&#39;, &#39;tennis racket&#39;, &#39;bottle&#39;, &#39;wine glass&#39;, &#39;cup&#39;, &#39;fork&#39;,
+               &#39;knife&#39;, &#39;spoon&#39;, &#39;bowl&#39;, &#39;banana&#39;, &#39;apple&#39;, &#39;sandwich&#39;, &#39;orange&#39;,
+               &#39;broccoli&#39;, &#39;carrot&#39;, &#39;hot dog&#39;, &#39;pizza&#39;, &#39;donut&#39;, &#39;cake&#39;, &#39;chair&#39;,
+               &#39;couch&#39;, &#39;potted plant&#39;, &#39;bed&#39;, &#39;dining table&#39;, &#39;toilet&#39;, &#39;tv&#39;,
+               &#39;laptop&#39;, &#39;mouse&#39;, &#39;remote&#39;, &#39;keyboard&#39;, &#39;cell phone&#39;, &#39;microwave&#39;,
+               &#39;oven&#39;, &#39;toaster&#39;, &#39;sink&#39;, &#39;refrigerator&#39;, &#39;book&#39;, &#39;clock&#39;, &#39;vase&#39;,
+               &#39;scissors&#39;, &#39;teddy bear&#39;, &#39;hair drier&#39;, &#39;toothbrush&#39;]
+
+    def __init__(self, image_set, root_path, data_path):
+        &#34;&#34;&#34;
+        fill basic information to initialize imdb
+        :param image_set: train2017, val2017
+        :param root_path: &#39;data&#39;, will write &#39;cache&#39;
+        :param data_path: &#39;data/coco&#39;, load data and write results
+        &#34;&#34;&#34;
+        super(coco, self).__init__(&#39;coco_&#39; + image_set, root_path)
+        # example: annotations/instances_train2017.json
+        self._anno_file = os.path.join(data_path, &#39;annotations&#39;, &#39;instances_&#39; + image_set + &#39;.json&#39;)
+        # example train2017/000000119993.jpg
+        self._image_file_tmpl = os.path.join(data_path, image_set, &#39;{}&#39;)
+        # example detections_val2017_results.json
+        self._result_file = os.path.join(data_path, &#39;detections_{}_results.json&#39;.format(image_set))
+        # get roidb
+
+        &#39;&#39;&#39;
+        if(&#34;custom&#34; in image_set):
+            self.classes = [&#39;__background__&#39;];
+            self._classes_file = os.path.join(data_path, &#39;annotations&#39;, &#39;classes.txt&#39;);
+            f = open(self._classes_file);
+            lines = f.readlines();
+            f.close();
+
+            for i in range(len(lines)):
+                self.classes.append(lines[i][:len(lines[i])-1]);
+        &#39;&#39;&#39;
+
+        self.classes = [&#39;__background__&#39;];
+        self._classes_file = os.path.join(data_path, &#39;annotations&#39;, &#39;classes.txt&#39;);
+        f = open(self._classes_file);
+        lines = f.readlines();
+        f.close();
+
+        for i in range(len(lines)):
+            self.classes.append(lines[i][:len(lines[i])-1]);
+
+        
+        self._roidb = self._get_cached(&#39;roidb&#39;, self._load_gt_roidb)
+        logger.info(&#39;%s num_images %d&#39; % (self.name, self.num_images))
+
+    def _load_gt_roidb(self):
+        _coco = COCO(self._anno_file)
+        # deal with class names
+        cats = [cat[&#39;name&#39;] for cat in _coco.loadCats(_coco.getCatIds())]
+        class_to_coco_ind = dict(zip(cats, _coco.getCatIds()))
+        class_to_ind = dict(zip(self.classes, range(self.num_classes)))
+        coco_ind_to_class_ind = dict([(class_to_coco_ind[cls], class_to_ind[cls])
+                                     for cls in self.classes[1:]])
+
+        image_ids = _coco.getImgIds()
+        gt_roidb = [self._load_annotation(_coco, coco_ind_to_class_ind, index) for index in image_ids]
+        return gt_roidb
+
+    def _load_annotation(self, _coco, coco_ind_to_class_ind, index):
+        &#34;&#34;&#34;
+        coco ann: [u&#39;segmentation&#39;, u&#39;area&#39;, u&#39;iscrowd&#39;, u&#39;image_id&#39;, u&#39;bbox&#39;, u&#39;category_id&#39;, u&#39;id&#39;]
+        iscrowd:
+            crowd instances are handled by marking their overlaps with all categories to -1
+            and later excluded in training
+        bbox:
+            [x1, y1, w, h]
+        :param index: coco image id
+        :return: roidb entry
+        &#34;&#34;&#34;
+        im_ann = _coco.loadImgs(index)[0]
+        filename = self._image_file_tmpl.format(im_ann[&#39;file_name&#39;])
+        width = im_ann[&#39;width&#39;]
+        height = im_ann[&#39;height&#39;]
+
+        annIds = _coco.getAnnIds(imgIds=index, iscrowd=None)
+        objs = _coco.loadAnns(annIds)
+
+        # sanitize bboxes
+        valid_objs = []
+        for obj in objs:
+            x, y, w, h = obj[&#39;bbox&#39;]
+            x1 = np.max((0, x))
+            y1 = np.max((0, y))
+            x2 = np.min((width - 1, x1 + np.max((0, w - 1))))
+            y2 = np.min((height - 1, y1 + np.max((0, h - 1))))
+            if obj[&#39;area&#39;] &gt; 0 and x2 &gt;= x1 and y2 &gt;= y1:
+                obj[&#39;clean_bbox&#39;] = [x1, y1, x2, y2]
+                valid_objs.append(obj)
+        objs = valid_objs
+        num_objs = len(objs)
+
+        boxes = np.zeros((num_objs, 4), dtype=np.uint16)
+        gt_classes = np.zeros((num_objs,), dtype=np.int32)
+        for ix, obj in enumerate(objs):
+            cls = coco_ind_to_class_ind[obj[&#39;category_id&#39;]]
+            boxes[ix, :] = obj[&#39;clean_bbox&#39;]
+            gt_classes[ix] = cls
+
+        roi_rec = {&#39;index&#39;: index,
+                   &#39;image&#39;: filename,
+                   &#39;height&#39;: height,
+                   &#39;width&#39;: width,
+                   &#39;boxes&#39;: boxes,
+                   &#39;gt_classes&#39;: gt_classes,
+                   &#39;flipped&#39;: False}
+        return roi_rec
+
+    def _evaluate_detections(self, detections, **kargs):
+        _coco = COCO(self._anno_file)
+        self._write_coco_results(_coco, detections)
+        self._do_python_eval(_coco)
+
+    def _write_coco_results(self, _coco, detections):
+        &#34;&#34;&#34; example results
+        [{&#34;image_id&#34;: 42,
+          &#34;category_id&#34;: 18,
+          &#34;bbox&#34;: [258.15,41.29,348.26,243.78],
+          &#34;score&#34;: 0.236}, ...]
+        &#34;&#34;&#34;
+        cats = [cat[&#39;name&#39;] for cat in _coco.loadCats(_coco.getCatIds())]
+        class_to_coco_ind = dict(zip(cats, _coco.getCatIds()))
+        results = []
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            logger.info(&#39;collecting %s results (%d/%d)&#39; % (cls, cls_ind, self.num_classes - 1))
+            coco_cat_id = class_to_coco_ind[cls]
+            results.extend(self._coco_results_one_category(detections[cls_ind], coco_cat_id))
+        logger.info(&#39;writing results json to %s&#39; % self._result_file)
+        with open(self._result_file, &#39;w&#39;) as f:
+            json.dump(results, f, sort_keys=True, indent=4)
+
+    def _coco_results_one_category(self, boxes, cat_id):
+        results = []
+        for im_ind, roi_rec in enumerate(self.roidb):
+            index = roi_rec[&#39;index&#39;]
+            dets = boxes[im_ind].astype(np.float)
+            if len(dets) == 0:
+                continue
+            scores = dets[:, -1]
+            xs = dets[:, 0]
+            ys = dets[:, 1]
+            ws = dets[:, 2] - xs + 1
+            hs = dets[:, 3] - ys + 1
+            result = [{&#39;image_id&#39;: index,
+                       &#39;category_id&#39;: cat_id,
+                       &#39;bbox&#39;: [xs[k], ys[k], ws[k], hs[k]],
+                       &#39;score&#39;: scores[k]} for k in range(dets.shape[0])]
+            results.extend(result)
+        return results
+
+    def _do_python_eval(self, _coco):
+        coco_dt = _coco.loadRes(self._result_file)
+        coco_eval = COCOeval(_coco, coco_dt)
+        coco_eval.params.useSegm = False
+        coco_eval.evaluate()
+        coco_eval.accumulate()
+        self._print_detection_metrics(coco_eval)
+
+    def _print_detection_metrics(self, coco_eval):
+        IoU_lo_thresh = 0.5
+        IoU_hi_thresh = 0.95
+
+        def _get_thr_ind(coco_eval, thr):
+            ind = np.where((coco_eval.params.iouThrs &gt; thr - 1e-5) &amp;
+                           (coco_eval.params.iouThrs &lt; thr + 1e-5))[0][0]
+            iou_thr = coco_eval.params.iouThrs[ind]
+            assert np.isclose(iou_thr, thr)
+            return ind
+
+        ind_lo = _get_thr_ind(coco_eval, IoU_lo_thresh)
+        ind_hi = _get_thr_ind(coco_eval, IoU_hi_thresh)
+
+        # precision has dims (iou, recall, cls, area range, max dets)
+        # area range index 0: all area ranges
+        # max dets index 2: 100 per image
+        precision = \
+            coco_eval.eval[&#39;precision&#39;][ind_lo:(ind_hi + 1), :, :, 0, 2]
+        ap_default = np.mean(precision[precision &gt; -1])
+        logger.info(&#39;~~~~ Mean and per-category AP @ IoU=%.2f,%.2f] ~~~~&#39; % (IoU_lo_thresh, IoU_hi_thresh))
+        logger.info(&#39;%-15s %5.1f&#39; % (&#39;all&#39;, 100 * ap_default))
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            # minus 1 because of __background__
+            precision = coco_eval.eval[&#39;precision&#39;][ind_lo:(ind_hi + 1), :, cls_ind - 1, 0, 2]
+            ap = np.mean(precision[precision &gt; -1])
+            logger.info(&#39;%-15s %5.1f&#39; % (cls, 100 * ap))
+
+        logger.info(&#39;~~~~ Summary metrics ~~~~&#39;)
+        coco_eval.summarize()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.symimdb.coco.coco"><code class="flex name class">
+<span>class <span class="ident">coco</span></span>
+<span>(</span><span>image_set, root_path, data_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>fill basic information to initialize imdb
+:param image_set: train2017, val2017
+:param root_path: 'data', will write 'cache'
+:param data_path: 'data/coco', load data and write results</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class coco(IMDB):
+    classes = [&#39;__background__&#39;,  # always index 0
+               &#39;person&#39;, &#39;bicycle&#39;, &#39;car&#39;, &#39;motorcycle&#39;, &#39;airplane&#39;, &#39;bus&#39;, &#39;train&#39;,
+               &#39;truck&#39;, &#39;boat&#39;, &#39;traffic light&#39;, &#39;fire hydrant&#39;, &#39;stop sign&#39;,
+               &#39;parking meter&#39;, &#39;bench&#39;, &#39;bird&#39;, &#39;cat&#39;, &#39;dog&#39;, &#39;horse&#39;, &#39;sheep&#39;,
+               &#39;cow&#39;, &#39;elephant&#39;, &#39;bear&#39;, &#39;zebra&#39;, &#39;giraffe&#39;, &#39;backpack&#39;, &#39;umbrella&#39;,
+               &#39;handbag&#39;, &#39;tie&#39;, &#39;suitcase&#39;, &#39;frisbee&#39;, &#39;skis&#39;, &#39;snowboard&#39;,
+               &#39;sports ball&#39;, &#39;kite&#39;, &#39;baseball bat&#39;, &#39;baseball glove&#39;, &#39;skateboard&#39;,
+               &#39;surfboard&#39;, &#39;tennis racket&#39;, &#39;bottle&#39;, &#39;wine glass&#39;, &#39;cup&#39;, &#39;fork&#39;,
+               &#39;knife&#39;, &#39;spoon&#39;, &#39;bowl&#39;, &#39;banana&#39;, &#39;apple&#39;, &#39;sandwich&#39;, &#39;orange&#39;,
+               &#39;broccoli&#39;, &#39;carrot&#39;, &#39;hot dog&#39;, &#39;pizza&#39;, &#39;donut&#39;, &#39;cake&#39;, &#39;chair&#39;,
+               &#39;couch&#39;, &#39;potted plant&#39;, &#39;bed&#39;, &#39;dining table&#39;, &#39;toilet&#39;, &#39;tv&#39;,
+               &#39;laptop&#39;, &#39;mouse&#39;, &#39;remote&#39;, &#39;keyboard&#39;, &#39;cell phone&#39;, &#39;microwave&#39;,
+               &#39;oven&#39;, &#39;toaster&#39;, &#39;sink&#39;, &#39;refrigerator&#39;, &#39;book&#39;, &#39;clock&#39;, &#39;vase&#39;,
+               &#39;scissors&#39;, &#39;teddy bear&#39;, &#39;hair drier&#39;, &#39;toothbrush&#39;]
+
+    def __init__(self, image_set, root_path, data_path):
+        &#34;&#34;&#34;
+        fill basic information to initialize imdb
+        :param image_set: train2017, val2017
+        :param root_path: &#39;data&#39;, will write &#39;cache&#39;
+        :param data_path: &#39;data/coco&#39;, load data and write results
+        &#34;&#34;&#34;
+        super(coco, self).__init__(&#39;coco_&#39; + image_set, root_path)
+        # example: annotations/instances_train2017.json
+        self._anno_file = os.path.join(data_path, &#39;annotations&#39;, &#39;instances_&#39; + image_set + &#39;.json&#39;)
+        # example train2017/000000119993.jpg
+        self._image_file_tmpl = os.path.join(data_path, image_set, &#39;{}&#39;)
+        # example detections_val2017_results.json
+        self._result_file = os.path.join(data_path, &#39;detections_{}_results.json&#39;.format(image_set))
+        # get roidb
+
+        &#39;&#39;&#39;
+        if(&#34;custom&#34; in image_set):
+            self.classes = [&#39;__background__&#39;];
+            self._classes_file = os.path.join(data_path, &#39;annotations&#39;, &#39;classes.txt&#39;);
+            f = open(self._classes_file);
+            lines = f.readlines();
+            f.close();
+
+            for i in range(len(lines)):
+                self.classes.append(lines[i][:len(lines[i])-1]);
+        &#39;&#39;&#39;
+
+        self.classes = [&#39;__background__&#39;];
+        self._classes_file = os.path.join(data_path, &#39;annotations&#39;, &#39;classes.txt&#39;);
+        f = open(self._classes_file);
+        lines = f.readlines();
+        f.close();
+
+        for i in range(len(lines)):
+            self.classes.append(lines[i][:len(lines[i])-1]);
+
+        
+        self._roidb = self._get_cached(&#39;roidb&#39;, self._load_gt_roidb)
+        logger.info(&#39;%s num_images %d&#39; % (self.name, self.num_images))
+
+    def _load_gt_roidb(self):
+        _coco = COCO(self._anno_file)
+        # deal with class names
+        cats = [cat[&#39;name&#39;] for cat in _coco.loadCats(_coco.getCatIds())]
+        class_to_coco_ind = dict(zip(cats, _coco.getCatIds()))
+        class_to_ind = dict(zip(self.classes, range(self.num_classes)))
+        coco_ind_to_class_ind = dict([(class_to_coco_ind[cls], class_to_ind[cls])
+                                     for cls in self.classes[1:]])
+
+        image_ids = _coco.getImgIds()
+        gt_roidb = [self._load_annotation(_coco, coco_ind_to_class_ind, index) for index in image_ids]
+        return gt_roidb
+
+    def _load_annotation(self, _coco, coco_ind_to_class_ind, index):
+        &#34;&#34;&#34;
+        coco ann: [u&#39;segmentation&#39;, u&#39;area&#39;, u&#39;iscrowd&#39;, u&#39;image_id&#39;, u&#39;bbox&#39;, u&#39;category_id&#39;, u&#39;id&#39;]
+        iscrowd:
+            crowd instances are handled by marking their overlaps with all categories to -1
+            and later excluded in training
+        bbox:
+            [x1, y1, w, h]
+        :param index: coco image id
+        :return: roidb entry
+        &#34;&#34;&#34;
+        im_ann = _coco.loadImgs(index)[0]
+        filename = self._image_file_tmpl.format(im_ann[&#39;file_name&#39;])
+        width = im_ann[&#39;width&#39;]
+        height = im_ann[&#39;height&#39;]
+
+        annIds = _coco.getAnnIds(imgIds=index, iscrowd=None)
+        objs = _coco.loadAnns(annIds)
+
+        # sanitize bboxes
+        valid_objs = []
+        for obj in objs:
+            x, y, w, h = obj[&#39;bbox&#39;]
+            x1 = np.max((0, x))
+            y1 = np.max((0, y))
+            x2 = np.min((width - 1, x1 + np.max((0, w - 1))))
+            y2 = np.min((height - 1, y1 + np.max((0, h - 1))))
+            if obj[&#39;area&#39;] &gt; 0 and x2 &gt;= x1 and y2 &gt;= y1:
+                obj[&#39;clean_bbox&#39;] = [x1, y1, x2, y2]
+                valid_objs.append(obj)
+        objs = valid_objs
+        num_objs = len(objs)
+
+        boxes = np.zeros((num_objs, 4), dtype=np.uint16)
+        gt_classes = np.zeros((num_objs,), dtype=np.int32)
+        for ix, obj in enumerate(objs):
+            cls = coco_ind_to_class_ind[obj[&#39;category_id&#39;]]
+            boxes[ix, :] = obj[&#39;clean_bbox&#39;]
+            gt_classes[ix] = cls
+
+        roi_rec = {&#39;index&#39;: index,
+                   &#39;image&#39;: filename,
+                   &#39;height&#39;: height,
+                   &#39;width&#39;: width,
+                   &#39;boxes&#39;: boxes,
+                   &#39;gt_classes&#39;: gt_classes,
+                   &#39;flipped&#39;: False}
+        return roi_rec
+
+    def _evaluate_detections(self, detections, **kargs):
+        _coco = COCO(self._anno_file)
+        self._write_coco_results(_coco, detections)
+        self._do_python_eval(_coco)
+
+    def _write_coco_results(self, _coco, detections):
+        &#34;&#34;&#34; example results
+        [{&#34;image_id&#34;: 42,
+          &#34;category_id&#34;: 18,
+          &#34;bbox&#34;: [258.15,41.29,348.26,243.78],
+          &#34;score&#34;: 0.236}, ...]
+        &#34;&#34;&#34;
+        cats = [cat[&#39;name&#39;] for cat in _coco.loadCats(_coco.getCatIds())]
+        class_to_coco_ind = dict(zip(cats, _coco.getCatIds()))
+        results = []
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            logger.info(&#39;collecting %s results (%d/%d)&#39; % (cls, cls_ind, self.num_classes - 1))
+            coco_cat_id = class_to_coco_ind[cls]
+            results.extend(self._coco_results_one_category(detections[cls_ind], coco_cat_id))
+        logger.info(&#39;writing results json to %s&#39; % self._result_file)
+        with open(self._result_file, &#39;w&#39;) as f:
+            json.dump(results, f, sort_keys=True, indent=4)
+
+    def _coco_results_one_category(self, boxes, cat_id):
+        results = []
+        for im_ind, roi_rec in enumerate(self.roidb):
+            index = roi_rec[&#39;index&#39;]
+            dets = boxes[im_ind].astype(np.float)
+            if len(dets) == 0:
+                continue
+            scores = dets[:, -1]
+            xs = dets[:, 0]
+            ys = dets[:, 1]
+            ws = dets[:, 2] - xs + 1
+            hs = dets[:, 3] - ys + 1
+            result = [{&#39;image_id&#39;: index,
+                       &#39;category_id&#39;: cat_id,
+                       &#39;bbox&#39;: [xs[k], ys[k], ws[k], hs[k]],
+                       &#39;score&#39;: scores[k]} for k in range(dets.shape[0])]
+            results.extend(result)
+        return results
+
+    def _do_python_eval(self, _coco):
+        coco_dt = _coco.loadRes(self._result_file)
+        coco_eval = COCOeval(_coco, coco_dt)
+        coco_eval.params.useSegm = False
+        coco_eval.evaluate()
+        coco_eval.accumulate()
+        self._print_detection_metrics(coco_eval)
+
+    def _print_detection_metrics(self, coco_eval):
+        IoU_lo_thresh = 0.5
+        IoU_hi_thresh = 0.95
+
+        def _get_thr_ind(coco_eval, thr):
+            ind = np.where((coco_eval.params.iouThrs &gt; thr - 1e-5) &amp;
+                           (coco_eval.params.iouThrs &lt; thr + 1e-5))[0][0]
+            iou_thr = coco_eval.params.iouThrs[ind]
+            assert np.isclose(iou_thr, thr)
+            return ind
+
+        ind_lo = _get_thr_ind(coco_eval, IoU_lo_thresh)
+        ind_hi = _get_thr_ind(coco_eval, IoU_hi_thresh)
+
+        # precision has dims (iou, recall, cls, area range, max dets)
+        # area range index 0: all area ranges
+        # max dets index 2: 100 per image
+        precision = \
+            coco_eval.eval[&#39;precision&#39;][ind_lo:(ind_hi + 1), :, :, 0, 2]
+        ap_default = np.mean(precision[precision &gt; -1])
+        logger.info(&#39;~~~~ Mean and per-category AP @ IoU=%.2f,%.2f] ~~~~&#39; % (IoU_lo_thresh, IoU_hi_thresh))
+        logger.info(&#39;%-15s %5.1f&#39; % (&#39;all&#39;, 100 * ap_default))
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            # minus 1 because of __background__
+            precision = coco_eval.eval[&#39;precision&#39;][ind_lo:(ind_hi + 1), :, cls_ind - 1, 0, 2]
+            ap = np.mean(precision[precision &gt; -1])
+            logger.info(&#39;%-15s %5.1f&#39; % (cls, 100 * ap))
+
+        logger.info(&#39;~~~~ Summary metrics ~~~~&#39;)
+        coco_eval.summarize()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB">IMDB</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.symimdb.coco.coco.classes"><code class="name">var <span class="ident">classes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB">IMDB</a></b></code>:
+<ul class="hlist">
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.append_flipped_images" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.append_flipped_images">append_flipped_images</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.filter_roidb" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.filter_roidb">filter_roidb</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb" href="index.html">3_mxrcnn.lib.mx-rcnn.symimdb</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.coco.coco" href="#3_mxrcnn.lib.mx-rcnn.symimdb.coco.coco">coco</a></code></h4>
+<ul class="">
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.coco.coco.classes" href="#3_mxrcnn.lib.mx-rcnn.symimdb.coco.coco.classes">classes</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

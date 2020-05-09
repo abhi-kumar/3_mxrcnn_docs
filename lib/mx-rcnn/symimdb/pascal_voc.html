@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import numpy as np
+
+from symnet.logger import logger
+from .imdb import IMDB
+
+
+class PascalVOC(IMDB):
+    classes = [&#39;__background__&#39;,  # always index 0
+               &#39;aeroplane&#39;, &#39;bicycle&#39;, &#39;bird&#39;, &#39;boat&#39;,
+               &#39;bottle&#39;, &#39;bus&#39;, &#39;car&#39;, &#39;cat&#39;, &#39;chair&#39;,
+               &#39;cow&#39;, &#39;diningtable&#39;, &#39;dog&#39;, &#39;horse&#39;,
+               &#39;motorbike&#39;, &#39;person&#39;, &#39;pottedplant&#39;,
+               &#39;sheep&#39;, &#39;sofa&#39;, &#39;train&#39;, &#39;tvmonitor&#39;]
+
+    def __init__(self, image_set, root_path, devkit_path):
+        &#34;&#34;&#34;
+        fill basic information to initialize imdb
+        :param image_set: 2007_trainval, 2007_test, etc
+        :param root_path: &#39;data&#39;, will write &#39;cache&#39;
+        :param devkit_path: &#39;data/VOCdevkit&#39;, load data and write results
+        &#34;&#34;&#34;
+        super(PascalVOC, self).__init__(&#39;voc_&#39; + image_set, root_path)
+
+        year, image_set = image_set.split(&#39;_&#39;)
+        self._config = {&#39;comp_id&#39;: &#39;comp4&#39;,
+                        &#39;use_diff&#39;: False,
+                        &#39;min_size&#39;: 2}
+        self._class_to_ind = dict(zip(self.classes, range(self.num_classes)))
+        self._image_index_file = os.path.join(devkit_path, &#39;VOC&#39; + year, &#39;ImageSets&#39;, &#39;Main&#39;, image_set + &#39;.txt&#39;)
+        self._image_file_tmpl = os.path.join(devkit_path, &#39;VOC&#39; + year, &#39;JPEGImages&#39;, &#39;{}.jpg&#39;)
+        self._image_anno_tmpl = os.path.join(devkit_path, &#39;VOC&#39; + year, &#39;Annotations&#39;, &#39;{}.xml&#39;)
+
+        # results
+        result_folder = os.path.join(devkit_path, &#39;results&#39;, &#39;VOC&#39; + year, &#39;Main&#39;)
+        if not os.path.exists(result_folder):
+            os.makedirs(result_folder)
+        self._result_file_tmpl = os.path.join(result_folder, &#39;comp4_det_&#39; + image_set + &#39;_{}.txt&#39;)
+
+        # get roidb
+        self._roidb = self._get_cached(&#39;roidb&#39;, self._load_gt_roidb)
+        logger.info(&#39;%s num_images %d&#39; % (self.name, self.num_images))
+
+    def _load_gt_roidb(self):
+        image_index = self._load_image_index()
+        gt_roidb = [self._load_annotation(index) for index in image_index]
+        return gt_roidb
+
+    def _load_image_index(self):
+        with open(self._image_index_file) as f:
+            image_set_index = [x.strip() for x in f.readlines()]
+        return image_set_index
+
+    def _load_annotation(self, index):
+        # store original annotation as orig_objs
+        height, width, orig_objs = self._parse_voc_anno(self._image_anno_tmpl.format(index))
+
+        # filter difficult objects
+        if not self._config[&#39;use_diff&#39;]:
+            non_diff_objs = [obj for obj in orig_objs if obj[&#39;difficult&#39;] == 0]
+            objs = non_diff_objs
+        else:
+            objs = orig_objs
+        num_objs = len(objs)
+
+        boxes = np.zeros((num_objs, 4), dtype=np.uint16)
+        gt_classes = np.zeros((num_objs,), dtype=np.int32)
+        # Load object bounding boxes into a data frame.
+        for ix, obj in enumerate(objs):
+            # Make pixel indexes 0-based
+            x1 = obj[&#39;bbox&#39;][0] - 1
+            y1 = obj[&#39;bbox&#39;][1] - 1
+            x2 = obj[&#39;bbox&#39;][2] - 1
+            y2 = obj[&#39;bbox&#39;][3] - 1
+            cls = self._class_to_ind[obj[&#39;name&#39;].lower().strip()]
+            boxes[ix, :] = [x1, y1, x2, y2]
+            gt_classes[ix] = cls
+
+        roi_rec = {&#39;index&#39;: index,
+                   &#39;objs&#39;: orig_objs,
+                   &#39;image&#39;: self._image_file_tmpl.format(index),
+                   &#39;height&#39;: height,
+                   &#39;width&#39;: width,
+                   &#39;boxes&#39;: boxes,
+                   &#39;gt_classes&#39;: gt_classes,
+                   &#39;flipped&#39;: False}
+        return roi_rec
+
+    @staticmethod
+    def _parse_voc_anno(filename):
+        import xml.etree.ElementTree as ET
+        tree = ET.parse(filename)
+        height = int(tree.find(&#39;size&#39;).find(&#39;height&#39;).text)
+        width = int(tree.find(&#39;size&#39;).find(&#39;width&#39;).text)
+        objects = []
+        for obj in tree.findall(&#39;object&#39;):
+            obj_dict = dict()
+            obj_dict[&#39;name&#39;] = obj.find(&#39;name&#39;).text
+            obj_dict[&#39;difficult&#39;] = int(obj.find(&#39;difficult&#39;).text)
+            bbox = obj.find(&#39;bndbox&#39;)
+            obj_dict[&#39;bbox&#39;] = [int(float(bbox.find(&#39;xmin&#39;).text)),
+                                int(float(bbox.find(&#39;ymin&#39;).text)),
+                                int(float(bbox.find(&#39;xmax&#39;).text)),
+                                int(float(bbox.find(&#39;ymax&#39;).text))]
+            objects.append(obj_dict)
+        return height, width, objects
+
+    def _evaluate_detections(self, detections, use_07_metric=True, **kargs):
+        self._write_pascal_results(detections)
+        self._do_python_eval(detections, use_07_metric)
+
+    def _write_pascal_results(self, all_boxes):
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            logger.info(&#39;Writing %s VOC results file&#39; % cls)
+            filename = self._result_file_tmpl.format(cls)
+            with open(filename, &#39;wt&#39;) as f:
+                for im_ind, roi_rec in enumerate(self.roidb):
+                    index = roi_rec[&#39;index&#39;]
+                    dets = all_boxes[cls_ind][im_ind]
+                    if len(dets) == 0:
+                        continue
+                    # the VOCdevkit expects 1-based indices
+                    for k in range(dets.shape[0]):
+                        f.write(&#39;{:s} {:.3f} {:.1f} {:.1f} {:.1f} {:.1f}\n&#39;.
+                                format(index, dets[k, -1],
+                                       dets[k, 0] + 1, dets[k, 1] + 1, dets[k, 2] + 1, dets[k, 3] + 1))
+
+    def _do_python_eval(self, all_boxes, use_07_metric):
+        aps = []
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            # class_anno is a dict [image_index, [bbox, difficult, det]]
+            class_anno = {}
+            npos = 0
+            for roi_rec in self.roidb:
+                index = roi_rec[&#39;index&#39;]
+                objects = [obj for obj in roi_rec[&#39;objs&#39;] if obj[&#39;name&#39;] == cls]
+                bbox = np.array([x[&#39;bbox&#39;] for x in objects])
+                difficult = np.array([x[&#39;difficult&#39;] for x in objects]).astype(np.bool)
+                det = [False] * len(objects)  # stand for detected
+                npos = npos + sum(~difficult)
+                class_anno[index] = {&#39;bbox&#39;: bbox,
+                                     &#39;difficult&#39;: difficult,
+                                     &#39;det&#39;: det}
+
+            # bbox is 2d array of all detections, corresponding to each image_id
+            image_ids = []
+            bbox = []
+            confidence = []
+            for im_ind, dets in enumerate(all_boxes[cls_ind]):
+                for k in range(dets.shape[0]):
+                    image_ids.append(self.roidb[im_ind][&#39;index&#39;])
+                    bbox.append([dets[k, 0] + 1, dets[k, 1] + 1, dets[k, 2] + 1, dets[k, 3] + 1])
+                    confidence.append(dets[k, -1])
+            bbox = np.array(bbox)
+            confidence = np.array(confidence)
+
+            rec, prec, ap = self.voc_eval(class_anno, npos, image_ids, bbox, confidence,
+                                          ovthresh=0.5, use_07_metric=use_07_metric)
+            aps.append(ap)
+
+            logger.info(&#39;AP for {} = {:.4f}&#39;.format(cls, ap))
+        logger.info(&#39;Mean AP = {:.4f}&#39;.format(np.mean(aps)))
+
+    @staticmethod
+    def voc_eval(class_anno, npos, image_ids, bbox, confidence, ovthresh=0.5, use_07_metric=False):
+        # sort by confidence
+        if bbox.shape[0] &gt; 0:
+            sorted_inds = np.argsort(-confidence)
+            sorted_scores = np.sort(-confidence)
+            bbox = bbox[sorted_inds, :]
+            image_ids = [image_ids[x] for x in sorted_inds]
+
+        # go down detections and mark true positives and false positives
+        nd = len(image_ids)
+        tp = np.zeros(nd)
+        fp = np.zeros(nd)
+        for d in range(nd):
+            r = class_anno[image_ids[d]]
+            bb = bbox[d, :].astype(float)
+            ovmax = -np.inf
+            bbgt = r[&#39;bbox&#39;].astype(float)
+
+            if bbgt.size &gt; 0:
+                # compute overlaps
+                # intersection
+                ixmin = np.maximum(bbgt[:, 0], bb[0])
+                iymin = np.maximum(bbgt[:, 1], bb[1])
+                ixmax = np.minimum(bbgt[:, 2], bb[2])
+                iymax = np.minimum(bbgt[:, 3], bb[3])
+                iw = np.maximum(ixmax - ixmin + 1., 0.)
+                ih = np.maximum(iymax - iymin + 1., 0.)
+                inters = iw * ih
+
+                # union
+                uni = ((bb[2] - bb[0] + 1.) * (bb[3] - bb[1] + 1.) +
+                       (bbgt[:, 2] - bbgt[:, 0] + 1.) *
+                       (bbgt[:, 3] - bbgt[:, 1] + 1.) - inters)
+
+                overlaps = inters / uni
+                ovmax = np.max(overlaps)
+                jmax = np.argmax(overlaps)
+
+            if ovmax &gt; ovthresh:
+                if not r[&#39;difficult&#39;][jmax]:
+                    if not r[&#39;det&#39;][jmax]:
+                        tp[d] = 1.
+                        r[&#39;det&#39;][jmax] = 1
+                    else:
+                        fp[d] = 1.
+            else:
+                fp[d] = 1.
+
+        # compute precision recall
+        fp = np.cumsum(fp)
+        tp = np.cumsum(tp)
+        rec = tp / float(npos)
+        # avoid division by zero in case first detection matches a difficult ground ruth
+        prec = tp / np.maximum(tp + fp, np.finfo(np.float64).eps)
+        ap = PascalVOC.voc_ap(rec, prec, use_07_metric)
+
+        return rec, prec, ap
+
+    @staticmethod
+    def voc_ap(rec, prec, use_07_metric=False):
+        if use_07_metric:
+            ap = 0.
+            for t in np.arange(0., 1.1, 0.1):
+                if np.sum(rec &gt;= t) == 0:
+                    p = 0
+                else:
+                    p = np.max(prec[rec &gt;= t])
+                ap += p / 11.
+        else:
+            # append sentinel values at both ends
+            mrec = np.concatenate(([0.], rec, [1.]))
+            mpre = np.concatenate(([0.], prec, [0.]))
+
+            # compute precision integration ladder
+            for i in range(mpre.size - 1, 0, -1):
+                mpre[i - 1] = np.maximum(mpre[i - 1], mpre[i])
+
+            # look for recall value changes
+            i = np.where(mrec[1:] != mrec[:-1])[0]
+
+            # sum (\delta recall) * prec
+            ap = np.sum((mrec[i + 1] - mrec[i]) * mpre[i + 1])
+        return ap</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC"><code class="flex name class">
+<span>class <span class="ident">PascalVOC</span></span>
+<span>(</span><span>image_set, root_path, devkit_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>fill basic information to initialize imdb
+:param image_set: 2007_trainval, 2007_test, etc
+:param root_path: 'data', will write 'cache'
+:param devkit_path: 'data/VOCdevkit', load data and write results</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PascalVOC(IMDB):
+    classes = [&#39;__background__&#39;,  # always index 0
+               &#39;aeroplane&#39;, &#39;bicycle&#39;, &#39;bird&#39;, &#39;boat&#39;,
+               &#39;bottle&#39;, &#39;bus&#39;, &#39;car&#39;, &#39;cat&#39;, &#39;chair&#39;,
+               &#39;cow&#39;, &#39;diningtable&#39;, &#39;dog&#39;, &#39;horse&#39;,
+               &#39;motorbike&#39;, &#39;person&#39;, &#39;pottedplant&#39;,
+               &#39;sheep&#39;, &#39;sofa&#39;, &#39;train&#39;, &#39;tvmonitor&#39;]
+
+    def __init__(self, image_set, root_path, devkit_path):
+        &#34;&#34;&#34;
+        fill basic information to initialize imdb
+        :param image_set: 2007_trainval, 2007_test, etc
+        :param root_path: &#39;data&#39;, will write &#39;cache&#39;
+        :param devkit_path: &#39;data/VOCdevkit&#39;, load data and write results
+        &#34;&#34;&#34;
+        super(PascalVOC, self).__init__(&#39;voc_&#39; + image_set, root_path)
+
+        year, image_set = image_set.split(&#39;_&#39;)
+        self._config = {&#39;comp_id&#39;: &#39;comp4&#39;,
+                        &#39;use_diff&#39;: False,
+                        &#39;min_size&#39;: 2}
+        self._class_to_ind = dict(zip(self.classes, range(self.num_classes)))
+        self._image_index_file = os.path.join(devkit_path, &#39;VOC&#39; + year, &#39;ImageSets&#39;, &#39;Main&#39;, image_set + &#39;.txt&#39;)
+        self._image_file_tmpl = os.path.join(devkit_path, &#39;VOC&#39; + year, &#39;JPEGImages&#39;, &#39;{}.jpg&#39;)
+        self._image_anno_tmpl = os.path.join(devkit_path, &#39;VOC&#39; + year, &#39;Annotations&#39;, &#39;{}.xml&#39;)
+
+        # results
+        result_folder = os.path.join(devkit_path, &#39;results&#39;, &#39;VOC&#39; + year, &#39;Main&#39;)
+        if not os.path.exists(result_folder):
+            os.makedirs(result_folder)
+        self._result_file_tmpl = os.path.join(result_folder, &#39;comp4_det_&#39; + image_set + &#39;_{}.txt&#39;)
+
+        # get roidb
+        self._roidb = self._get_cached(&#39;roidb&#39;, self._load_gt_roidb)
+        logger.info(&#39;%s num_images %d&#39; % (self.name, self.num_images))
+
+    def _load_gt_roidb(self):
+        image_index = self._load_image_index()
+        gt_roidb = [self._load_annotation(index) for index in image_index]
+        return gt_roidb
+
+    def _load_image_index(self):
+        with open(self._image_index_file) as f:
+            image_set_index = [x.strip() for x in f.readlines()]
+        return image_set_index
+
+    def _load_annotation(self, index):
+        # store original annotation as orig_objs
+        height, width, orig_objs = self._parse_voc_anno(self._image_anno_tmpl.format(index))
+
+        # filter difficult objects
+        if not self._config[&#39;use_diff&#39;]:
+            non_diff_objs = [obj for obj in orig_objs if obj[&#39;difficult&#39;] == 0]
+            objs = non_diff_objs
+        else:
+            objs = orig_objs
+        num_objs = len(objs)
+
+        boxes = np.zeros((num_objs, 4), dtype=np.uint16)
+        gt_classes = np.zeros((num_objs,), dtype=np.int32)
+        # Load object bounding boxes into a data frame.
+        for ix, obj in enumerate(objs):
+            # Make pixel indexes 0-based
+            x1 = obj[&#39;bbox&#39;][0] - 1
+            y1 = obj[&#39;bbox&#39;][1] - 1
+            x2 = obj[&#39;bbox&#39;][2] - 1
+            y2 = obj[&#39;bbox&#39;][3] - 1
+            cls = self._class_to_ind[obj[&#39;name&#39;].lower().strip()]
+            boxes[ix, :] = [x1, y1, x2, y2]
+            gt_classes[ix] = cls
+
+        roi_rec = {&#39;index&#39;: index,
+                   &#39;objs&#39;: orig_objs,
+                   &#39;image&#39;: self._image_file_tmpl.format(index),
+                   &#39;height&#39;: height,
+                   &#39;width&#39;: width,
+                   &#39;boxes&#39;: boxes,
+                   &#39;gt_classes&#39;: gt_classes,
+                   &#39;flipped&#39;: False}
+        return roi_rec
+
+    @staticmethod
+    def _parse_voc_anno(filename):
+        import xml.etree.ElementTree as ET
+        tree = ET.parse(filename)
+        height = int(tree.find(&#39;size&#39;).find(&#39;height&#39;).text)
+        width = int(tree.find(&#39;size&#39;).find(&#39;width&#39;).text)
+        objects = []
+        for obj in tree.findall(&#39;object&#39;):
+            obj_dict = dict()
+            obj_dict[&#39;name&#39;] = obj.find(&#39;name&#39;).text
+            obj_dict[&#39;difficult&#39;] = int(obj.find(&#39;difficult&#39;).text)
+            bbox = obj.find(&#39;bndbox&#39;)
+            obj_dict[&#39;bbox&#39;] = [int(float(bbox.find(&#39;xmin&#39;).text)),
+                                int(float(bbox.find(&#39;ymin&#39;).text)),
+                                int(float(bbox.find(&#39;xmax&#39;).text)),
+                                int(float(bbox.find(&#39;ymax&#39;).text))]
+            objects.append(obj_dict)
+        return height, width, objects
+
+    def _evaluate_detections(self, detections, use_07_metric=True, **kargs):
+        self._write_pascal_results(detections)
+        self._do_python_eval(detections, use_07_metric)
+
+    def _write_pascal_results(self, all_boxes):
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            logger.info(&#39;Writing %s VOC results file&#39; % cls)
+            filename = self._result_file_tmpl.format(cls)
+            with open(filename, &#39;wt&#39;) as f:
+                for im_ind, roi_rec in enumerate(self.roidb):
+                    index = roi_rec[&#39;index&#39;]
+                    dets = all_boxes[cls_ind][im_ind]
+                    if len(dets) == 0:
+                        continue
+                    # the VOCdevkit expects 1-based indices
+                    for k in range(dets.shape[0]):
+                        f.write(&#39;{:s} {:.3f} {:.1f} {:.1f} {:.1f} {:.1f}\n&#39;.
+                                format(index, dets[k, -1],
+                                       dets[k, 0] + 1, dets[k, 1] + 1, dets[k, 2] + 1, dets[k, 3] + 1))
+
+    def _do_python_eval(self, all_boxes, use_07_metric):
+        aps = []
+        for cls_ind, cls in enumerate(self.classes):
+            if cls == &#39;__background__&#39;:
+                continue
+            # class_anno is a dict [image_index, [bbox, difficult, det]]
+            class_anno = {}
+            npos = 0
+            for roi_rec in self.roidb:
+                index = roi_rec[&#39;index&#39;]
+                objects = [obj for obj in roi_rec[&#39;objs&#39;] if obj[&#39;name&#39;] == cls]
+                bbox = np.array([x[&#39;bbox&#39;] for x in objects])
+                difficult = np.array([x[&#39;difficult&#39;] for x in objects]).astype(np.bool)
+                det = [False] * len(objects)  # stand for detected
+                npos = npos + sum(~difficult)
+                class_anno[index] = {&#39;bbox&#39;: bbox,
+                                     &#39;difficult&#39;: difficult,
+                                     &#39;det&#39;: det}
+
+            # bbox is 2d array of all detections, corresponding to each image_id
+            image_ids = []
+            bbox = []
+            confidence = []
+            for im_ind, dets in enumerate(all_boxes[cls_ind]):
+                for k in range(dets.shape[0]):
+                    image_ids.append(self.roidb[im_ind][&#39;index&#39;])
+                    bbox.append([dets[k, 0] + 1, dets[k, 1] + 1, dets[k, 2] + 1, dets[k, 3] + 1])
+                    confidence.append(dets[k, -1])
+            bbox = np.array(bbox)
+            confidence = np.array(confidence)
+
+            rec, prec, ap = self.voc_eval(class_anno, npos, image_ids, bbox, confidence,
+                                          ovthresh=0.5, use_07_metric=use_07_metric)
+            aps.append(ap)
+
+            logger.info(&#39;AP for {} = {:.4f}&#39;.format(cls, ap))
+        logger.info(&#39;Mean AP = {:.4f}&#39;.format(np.mean(aps)))
+
+    @staticmethod
+    def voc_eval(class_anno, npos, image_ids, bbox, confidence, ovthresh=0.5, use_07_metric=False):
+        # sort by confidence
+        if bbox.shape[0] &gt; 0:
+            sorted_inds = np.argsort(-confidence)
+            sorted_scores = np.sort(-confidence)
+            bbox = bbox[sorted_inds, :]
+            image_ids = [image_ids[x] for x in sorted_inds]
+
+        # go down detections and mark true positives and false positives
+        nd = len(image_ids)
+        tp = np.zeros(nd)
+        fp = np.zeros(nd)
+        for d in range(nd):
+            r = class_anno[image_ids[d]]
+            bb = bbox[d, :].astype(float)
+            ovmax = -np.inf
+            bbgt = r[&#39;bbox&#39;].astype(float)
+
+            if bbgt.size &gt; 0:
+                # compute overlaps
+                # intersection
+                ixmin = np.maximum(bbgt[:, 0], bb[0])
+                iymin = np.maximum(bbgt[:, 1], bb[1])
+                ixmax = np.minimum(bbgt[:, 2], bb[2])
+                iymax = np.minimum(bbgt[:, 3], bb[3])
+                iw = np.maximum(ixmax - ixmin + 1., 0.)
+                ih = np.maximum(iymax - iymin + 1., 0.)
+                inters = iw * ih
+
+                # union
+                uni = ((bb[2] - bb[0] + 1.) * (bb[3] - bb[1] + 1.) +
+                       (bbgt[:, 2] - bbgt[:, 0] + 1.) *
+                       (bbgt[:, 3] - bbgt[:, 1] + 1.) - inters)
+
+                overlaps = inters / uni
+                ovmax = np.max(overlaps)
+                jmax = np.argmax(overlaps)
+
+            if ovmax &gt; ovthresh:
+                if not r[&#39;difficult&#39;][jmax]:
+                    if not r[&#39;det&#39;][jmax]:
+                        tp[d] = 1.
+                        r[&#39;det&#39;][jmax] = 1
+                    else:
+                        fp[d] = 1.
+            else:
+                fp[d] = 1.
+
+        # compute precision recall
+        fp = np.cumsum(fp)
+        tp = np.cumsum(tp)
+        rec = tp / float(npos)
+        # avoid division by zero in case first detection matches a difficult ground ruth
+        prec = tp / np.maximum(tp + fp, np.finfo(np.float64).eps)
+        ap = PascalVOC.voc_ap(rec, prec, use_07_metric)
+
+        return rec, prec, ap
+
+    @staticmethod
+    def voc_ap(rec, prec, use_07_metric=False):
+        if use_07_metric:
+            ap = 0.
+            for t in np.arange(0., 1.1, 0.1):
+                if np.sum(rec &gt;= t) == 0:
+                    p = 0
+                else:
+                    p = np.max(prec[rec &gt;= t])
+                ap += p / 11.
+        else:
+            # append sentinel values at both ends
+            mrec = np.concatenate(([0.], rec, [1.]))
+            mpre = np.concatenate(([0.], prec, [0.]))
+
+            # compute precision integration ladder
+            for i in range(mpre.size - 1, 0, -1):
+                mpre[i - 1] = np.maximum(mpre[i - 1], mpre[i])
+
+            # look for recall value changes
+            i = np.where(mrec[1:] != mrec[:-1])[0]
+
+            # sum (\delta recall) * prec
+            ap = np.sum((mrec[i + 1] - mrec[i]) * mpre[i + 1])
+        return ap</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB">IMDB</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.classes"><code class="name">var <span class="ident">classes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.voc_ap"><code class="name flex">
+<span>def <span class="ident">voc_ap</span></span>(<span>rec, prec, use_07_metric=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def voc_ap(rec, prec, use_07_metric=False):
+    if use_07_metric:
+        ap = 0.
+        for t in np.arange(0., 1.1, 0.1):
+            if np.sum(rec &gt;= t) == 0:
+                p = 0
+            else:
+                p = np.max(prec[rec &gt;= t])
+            ap += p / 11.
+    else:
+        # append sentinel values at both ends
+        mrec = np.concatenate(([0.], rec, [1.]))
+        mpre = np.concatenate(([0.], prec, [0.]))
+
+        # compute precision integration ladder
+        for i in range(mpre.size - 1, 0, -1):
+            mpre[i - 1] = np.maximum(mpre[i - 1], mpre[i])
+
+        # look for recall value changes
+        i = np.where(mrec[1:] != mrec[:-1])[0]
+
+        # sum (\delta recall) * prec
+        ap = np.sum((mrec[i + 1] - mrec[i]) * mpre[i + 1])
+    return ap</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.voc_eval"><code class="name flex">
+<span>def <span class="ident">voc_eval</span></span>(<span>class_anno, npos, image_ids, bbox, confidence, ovthresh=0.5, use_07_metric=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def voc_eval(class_anno, npos, image_ids, bbox, confidence, ovthresh=0.5, use_07_metric=False):
+    # sort by confidence
+    if bbox.shape[0] &gt; 0:
+        sorted_inds = np.argsort(-confidence)
+        sorted_scores = np.sort(-confidence)
+        bbox = bbox[sorted_inds, :]
+        image_ids = [image_ids[x] for x in sorted_inds]
+
+    # go down detections and mark true positives and false positives
+    nd = len(image_ids)
+    tp = np.zeros(nd)
+    fp = np.zeros(nd)
+    for d in range(nd):
+        r = class_anno[image_ids[d]]
+        bb = bbox[d, :].astype(float)
+        ovmax = -np.inf
+        bbgt = r[&#39;bbox&#39;].astype(float)
+
+        if bbgt.size &gt; 0:
+            # compute overlaps
+            # intersection
+            ixmin = np.maximum(bbgt[:, 0], bb[0])
+            iymin = np.maximum(bbgt[:, 1], bb[1])
+            ixmax = np.minimum(bbgt[:, 2], bb[2])
+            iymax = np.minimum(bbgt[:, 3], bb[3])
+            iw = np.maximum(ixmax - ixmin + 1., 0.)
+            ih = np.maximum(iymax - iymin + 1., 0.)
+            inters = iw * ih
+
+            # union
+            uni = ((bb[2] - bb[0] + 1.) * (bb[3] - bb[1] + 1.) +
+                   (bbgt[:, 2] - bbgt[:, 0] + 1.) *
+                   (bbgt[:, 3] - bbgt[:, 1] + 1.) - inters)
+
+            overlaps = inters / uni
+            ovmax = np.max(overlaps)
+            jmax = np.argmax(overlaps)
+
+        if ovmax &gt; ovthresh:
+            if not r[&#39;difficult&#39;][jmax]:
+                if not r[&#39;det&#39;][jmax]:
+                    tp[d] = 1.
+                    r[&#39;det&#39;][jmax] = 1
+                else:
+                    fp[d] = 1.
+        else:
+            fp[d] = 1.
+
+    # compute precision recall
+    fp = np.cumsum(fp)
+    tp = np.cumsum(tp)
+    rec = tp / float(npos)
+    # avoid division by zero in case first detection matches a difficult ground ruth
+    prec = tp / np.maximum(tp + fp, np.finfo(np.float64).eps)
+    ap = PascalVOC.voc_ap(rec, prec, use_07_metric)
+
+    return rec, prec, ap</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB">IMDB</a></b></code>:
+<ul class="hlist">
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.append_flipped_images" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.append_flipped_images">append_flipped_images</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.filter_roidb" href="imdb.html#3_mxrcnn.lib.mx-rcnn.symimdb.imdb.IMDB.filter_roidb">filter_roidb</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb" href="index.html">3_mxrcnn.lib.mx-rcnn.symimdb</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC" href="#3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC">PascalVOC</a></code></h4>
+<ul class="">
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.classes" href="#3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.classes">classes</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.voc_ap" href="#3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.voc_ap">voc_ap</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.voc_eval" href="#3_mxrcnn.lib.mx-rcnn.symimdb.pascal_voc.PascalVOC.voc_eval">voc_eval</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

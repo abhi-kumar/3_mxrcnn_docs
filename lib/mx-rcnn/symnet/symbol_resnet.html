@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import mxnet as mx
+from . import proposal_target
+
+eps=2e-5
+use_global_stats=True
+workspace=1024
+
+
+def residual_unit(data, num_filter, stride, dim_match, name):
+    bn1 = mx.sym.BatchNorm(data=data, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=name + &#39;_bn1&#39;)
+    act1 = mx.sym.Activation(data=bn1, act_type=&#39;relu&#39;, name=name + &#39;_relu1&#39;)
+    conv1 = mx.sym.Convolution(data=act1, num_filter=int(num_filter * 0.25), kernel=(1, 1), stride=(1, 1), pad=(0, 0),
+                               no_bias=True, workspace=workspace, name=name + &#39;_conv1&#39;)
+    bn2 = mx.sym.BatchNorm(data=conv1, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=name + &#39;_bn2&#39;)
+    act2 = mx.sym.Activation(data=bn2, act_type=&#39;relu&#39;, name=name + &#39;_relu2&#39;)
+    conv2 = mx.sym.Convolution(data=act2, num_filter=int(num_filter * 0.25), kernel=(3, 3), stride=stride, pad=(1, 1),
+                               no_bias=True, workspace=workspace, name=name + &#39;_conv2&#39;)
+    bn3 = mx.sym.BatchNorm(data=conv2, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=name + &#39;_bn3&#39;)
+    act3 = mx.sym.Activation(data=bn3, act_type=&#39;relu&#39;, name=name + &#39;_relu3&#39;)
+    conv3 = mx.sym.Convolution(data=act3, num_filter=num_filter, kernel=(1, 1), stride=(1, 1), pad=(0, 0), no_bias=True,
+                               workspace=workspace, name=name + &#39;_conv3&#39;)
+    if dim_match:
+        shortcut = data
+    else:
+        shortcut = mx.sym.Convolution(data=act1, num_filter=num_filter, kernel=(1, 1), stride=stride, no_bias=True,
+                                      workspace=workspace, name=name + &#39;_sc&#39;)
+    sum = mx.sym.ElementWiseSum(*[conv3, shortcut], name=name + &#39;_plus&#39;)
+    return sum
+
+
+def get_resnet_feature(data, units, filter_list):
+    # res1
+    data_bn = mx.sym.BatchNorm(data=data, fix_gamma=True, eps=eps, use_global_stats=use_global_stats, name=&#39;bn_data&#39;)
+    conv0 = mx.sym.Convolution(data=data_bn, num_filter=64, kernel=(7, 7), stride=(2, 2), pad=(3, 3),
+                               no_bias=True, name=&#34;conv0&#34;, workspace=workspace)
+    bn0 = mx.sym.BatchNorm(data=conv0, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=&#39;bn0&#39;)
+    relu0 = mx.sym.Activation(data=bn0, act_type=&#39;relu&#39;, name=&#39;relu0&#39;)
+    pool0 = mx.symbol.Pooling(data=relu0, kernel=(3, 3), stride=(2, 2), pad=(1, 1), pool_type=&#39;max&#39;, name=&#39;pool0&#39;)
+
+    # res2
+    unit = residual_unit(data=pool0, num_filter=filter_list[0], stride=(1, 1), dim_match=False, name=&#39;stage1_unit1&#39;)
+    for i in range(2, units[0] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[0], stride=(1, 1), dim_match=True, name=&#39;stage1_unit%s&#39; % i)
+
+    # res3
+    unit = residual_unit(data=unit, num_filter=filter_list[1], stride=(2, 2), dim_match=False, name=&#39;stage2_unit1&#39;)
+    for i in range(2, units[1] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[1], stride=(1, 1), dim_match=True, name=&#39;stage2_unit%s&#39; % i)
+
+    # res4
+    unit = residual_unit(data=unit, num_filter=filter_list[2], stride=(2, 2), dim_match=False, name=&#39;stage3_unit1&#39;)
+    for i in range(2, units[2] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[2], stride=(1, 1), dim_match=True, name=&#39;stage3_unit%s&#39; % i)
+    return unit
+
+
+def get_resnet_top_feature(data, units, filter_list):
+    unit = residual_unit(data=data, num_filter=filter_list[3], stride=(2, 2), dim_match=False, name=&#39;stage4_unit1&#39;)
+    for i in range(2, units[3] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[3], stride=(1, 1), dim_match=True, name=&#39;stage4_unit%s&#39; % i)
+    bn1 = mx.sym.BatchNorm(data=unit, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=&#39;bn1&#39;)
+    relu1 = mx.sym.Activation(data=bn1, act_type=&#39;relu&#39;, name=&#39;relu1&#39;)
+    pool1 = mx.symbol.Pooling(data=relu1, global_pool=True, kernel=(7, 7), pool_type=&#39;avg&#39;, name=&#39;pool1&#39;)
+    return pool1
+
+
+def get_resnet_train(anchor_scales, anchor_ratios, rpn_feature_stride,
+                     rpn_pre_topk, rpn_post_topk, rpn_nms_thresh, rpn_min_size, rpn_batch_rois,
+                     num_classes, rcnn_feature_stride, rcnn_pooled_size, rcnn_batch_size,
+                     rcnn_batch_rois, rcnn_fg_fraction, rcnn_fg_overlap, rcnn_bbox_stds,
+                     units, filter_list):
+    num_anchors = len(anchor_scales) * len(anchor_ratios)
+
+    data = mx.symbol.Variable(name=&#34;data&#34;)
+    im_info = mx.symbol.Variable(name=&#34;im_info&#34;)
+    gt_boxes = mx.symbol.Variable(name=&#34;gt_boxes&#34;)
+    rpn_label = mx.symbol.Variable(name=&#39;label&#39;)
+    rpn_bbox_target = mx.symbol.Variable(name=&#39;bbox_target&#39;)
+    rpn_bbox_weight = mx.symbol.Variable(name=&#39;bbox_weight&#39;)
+
+    # shared convolutional layers
+    conv_feat = get_resnet_feature(data, units=units, filter_list=filter_list)
+
+    # rpn feature
+    rpn_conv = mx.symbol.Convolution(
+        data=conv_feat, kernel=(3, 3), pad=(1, 1), num_filter=512, name=&#34;rpn_conv_3x3&#34;)
+    rpn_relu = mx.symbol.Activation(data=rpn_conv, act_type=&#34;relu&#34;, name=&#34;rpn_relu&#34;)
+
+    # rpn classification
+    rpn_cls_score = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=2 * num_anchors, name=&#34;rpn_cls_score&#34;)
+    rpn_cls_score_reshape = mx.symbol.Reshape(
+        data=rpn_cls_score, shape=(0, 2, -1, 0), name=&#34;rpn_cls_score_reshape&#34;)
+    rpn_cls_prob = mx.symbol.SoftmaxOutput(data=rpn_cls_score_reshape, label=rpn_label, multi_output=True,
+                                           normalization=&#39;valid&#39;, use_ignore=True, ignore_label=-1, name=&#34;rpn_cls_prob&#34;)
+    rpn_cls_act = mx.symbol.softmax(
+        data=rpn_cls_score_reshape, axis=1, name=&#34;rpn_cls_act&#34;)
+    rpn_cls_act_reshape = mx.symbol.Reshape(
+        data=rpn_cls_act, shape=(0, 2 * num_anchors, -1, 0), name=&#39;rpn_cls_act_reshape&#39;)
+
+    # rpn bbox regression
+    rpn_bbox_pred = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=4 * num_anchors, name=&#34;rpn_bbox_pred&#34;)
+    rpn_bbox_loss_ = rpn_bbox_weight * mx.symbol.smooth_l1(name=&#39;rpn_bbox_loss_&#39;, scalar=3.0, data=(rpn_bbox_pred - rpn_bbox_target))
+    rpn_bbox_loss = mx.sym.MakeLoss(name=&#39;rpn_bbox_loss&#39;, data=rpn_bbox_loss_, grad_scale=1.0 / rpn_batch_rois)
+
+    # rpn proposal
+    rois = mx.symbol.contrib.MultiProposal(
+        cls_prob=rpn_cls_act_reshape, bbox_pred=rpn_bbox_pred, im_info=im_info, name=&#39;rois&#39;,
+        feature_stride=rpn_feature_stride, scales=anchor_scales, ratios=anchor_ratios,
+        rpn_pre_nms_top_n=rpn_pre_topk, rpn_post_nms_top_n=rpn_post_topk,
+        threshold=rpn_nms_thresh, rpn_min_size=rpn_min_size)
+
+    # rcnn roi proposal target
+    group = mx.symbol.Custom(rois=rois, gt_boxes=gt_boxes, op_type=&#39;proposal_target&#39;,
+                             num_classes=num_classes, batch_images=rcnn_batch_size,
+                             batch_rois=rcnn_batch_rois, fg_fraction=rcnn_fg_fraction,
+                             fg_overlap=rcnn_fg_overlap, box_stds=rcnn_bbox_stds)
+    rois = group[0]
+    label = group[1]
+    bbox_target = group[2]
+    bbox_weight = group[3]
+
+    # rcnn roi pool
+    roi_pool = mx.symbol.ROIPooling(
+        name=&#39;roi_pool&#39;, data=conv_feat, rois=rois, pooled_size=rcnn_pooled_size, spatial_scale=1.0 / rcnn_feature_stride)
+
+    # rcnn top feature
+    top_feat = get_resnet_top_feature(roi_pool, units=units, filter_list=filter_list)
+
+    # rcnn classification
+    cls_score = mx.symbol.FullyConnected(name=&#39;cls_score&#39;, data=top_feat, num_hidden=num_classes)
+    cls_prob = mx.symbol.SoftmaxOutput(name=&#39;cls_prob&#39;, data=cls_score, label=label, normalization=&#39;batch&#39;)
+
+    # rcnn bbox regression
+    bbox_pred = mx.symbol.FullyConnected(name=&#39;bbox_pred&#39;, data=top_feat, num_hidden=num_classes * 4)
+    bbox_loss_ = bbox_weight * mx.symbol.smooth_l1(name=&#39;bbox_loss_&#39;, scalar=1.0, data=(bbox_pred - bbox_target))
+    bbox_loss = mx.sym.MakeLoss(name=&#39;bbox_loss&#39;, data=bbox_loss_, grad_scale=1.0 / rcnn_batch_rois)
+
+    # reshape output
+    label = mx.symbol.Reshape(data=label, shape=(rcnn_batch_size, -1), name=&#39;label_reshape&#39;)
+    cls_prob = mx.symbol.Reshape(data=cls_prob, shape=(rcnn_batch_size, -1, num_classes), name=&#39;cls_prob_reshape&#39;)
+    bbox_loss = mx.symbol.Reshape(data=bbox_loss, shape=(rcnn_batch_size, -1, 4 * num_classes), name=&#39;bbox_loss_reshape&#39;)
+
+    # group output
+    group = mx.symbol.Group([rpn_cls_prob, rpn_bbox_loss, cls_prob, bbox_loss, mx.symbol.BlockGrad(label)])
+    return group
+
+
+def get_resnet_test(anchor_scales, anchor_ratios, rpn_feature_stride,
+                    rpn_pre_topk, rpn_post_topk, rpn_nms_thresh, rpn_min_size,
+                    num_classes, rcnn_feature_stride, rcnn_pooled_size, rcnn_batch_size,
+                    units, filter_list):
+    num_anchors = len(anchor_scales) * len(anchor_ratios)
+
+    data = mx.symbol.Variable(name=&#34;data&#34;)
+    im_info = mx.symbol.Variable(name=&#34;im_info&#34;)
+
+    # shared convolutional layers
+    conv_feat = get_resnet_feature(data, units=units, filter_list=filter_list)
+
+    # rpn feature
+    rpn_conv = mx.symbol.Convolution(
+        data=conv_feat, kernel=(3, 3), pad=(1, 1), num_filter=512, name=&#34;rpn_conv_3x3&#34;)
+    rpn_relu = mx.symbol.Activation(data=rpn_conv, act_type=&#34;relu&#34;, name=&#34;rpn_relu&#34;)
+
+    # rpn classification
+    rpn_cls_score = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=2 * num_anchors, name=&#34;rpn_cls_score&#34;)
+    rpn_cls_score_reshape = mx.symbol.Reshape(
+        data=rpn_cls_score, shape=(0, 2, -1, 0), name=&#34;rpn_cls_score_reshape&#34;)
+    rpn_cls_act = mx.symbol.softmax(
+        data=rpn_cls_score_reshape, axis=1, name=&#34;rpn_cls_act&#34;)
+    rpn_cls_act_reshape = mx.symbol.Reshape(
+        data=rpn_cls_act, shape=(0, 2 * num_anchors, -1, 0), name=&#39;rpn_cls_act_reshape&#39;)
+
+    # rpn bbox regression
+    rpn_bbox_pred = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=4 * num_anchors, name=&#34;rpn_bbox_pred&#34;)
+
+    # rpn proposal
+    rois = mx.symbol.contrib.MultiProposal(
+        cls_prob=rpn_cls_act_reshape, bbox_pred=rpn_bbox_pred, im_info=im_info, name=&#39;rois&#39;,
+        feature_stride=rpn_feature_stride, scales=anchor_scales, ratios=anchor_ratios,
+        rpn_pre_nms_top_n=rpn_pre_topk, rpn_post_nms_top_n=rpn_post_topk,
+        threshold=rpn_nms_thresh, rpn_min_size=rpn_min_size)
+
+    # rcnn roi pool
+    roi_pool = mx.symbol.ROIPooling(
+        name=&#39;roi_pool&#39;, data=conv_feat, rois=rois, pooled_size=rcnn_pooled_size, spatial_scale=1.0 / rcnn_feature_stride)
+
+    # rcnn top feature
+    top_feat = get_resnet_top_feature(roi_pool, units=units, filter_list=filter_list)
+
+    # rcnn classification
+    cls_score = mx.symbol.FullyConnected(name=&#39;cls_score&#39;, data=top_feat, num_hidden=num_classes)
+    cls_prob = mx.symbol.softmax(name=&#39;cls_prob&#39;, data=cls_score)
+
+    # rcnn bbox regression
+    bbox_pred = mx.symbol.FullyConnected(name=&#39;bbox_pred&#39;, data=top_feat, num_hidden=num_classes * 4)
+
+    # reshape output
+    cls_prob = mx.symbol.Reshape(data=cls_prob, shape=(rcnn_batch_size, -1, num_classes), name=&#39;cls_prob_reshape&#39;)
+    bbox_pred = mx.symbol.Reshape(data=bbox_pred, shape=(rcnn_batch_size, -1, 4 * num_classes), name=&#39;bbox_pred_reshape&#39;)
+
+    # group output
+    group = mx.symbol.Group([rois, cls_prob, bbox_pred])
+    return group</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_feature"><code class="name flex">
+<span>def <span class="ident">get_resnet_feature</span></span>(<span>data, units, filter_list)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_resnet_feature(data, units, filter_list):
+    # res1
+    data_bn = mx.sym.BatchNorm(data=data, fix_gamma=True, eps=eps, use_global_stats=use_global_stats, name=&#39;bn_data&#39;)
+    conv0 = mx.sym.Convolution(data=data_bn, num_filter=64, kernel=(7, 7), stride=(2, 2), pad=(3, 3),
+                               no_bias=True, name=&#34;conv0&#34;, workspace=workspace)
+    bn0 = mx.sym.BatchNorm(data=conv0, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=&#39;bn0&#39;)
+    relu0 = mx.sym.Activation(data=bn0, act_type=&#39;relu&#39;, name=&#39;relu0&#39;)
+    pool0 = mx.symbol.Pooling(data=relu0, kernel=(3, 3), stride=(2, 2), pad=(1, 1), pool_type=&#39;max&#39;, name=&#39;pool0&#39;)
+
+    # res2
+    unit = residual_unit(data=pool0, num_filter=filter_list[0], stride=(1, 1), dim_match=False, name=&#39;stage1_unit1&#39;)
+    for i in range(2, units[0] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[0], stride=(1, 1), dim_match=True, name=&#39;stage1_unit%s&#39; % i)
+
+    # res3
+    unit = residual_unit(data=unit, num_filter=filter_list[1], stride=(2, 2), dim_match=False, name=&#39;stage2_unit1&#39;)
+    for i in range(2, units[1] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[1], stride=(1, 1), dim_match=True, name=&#39;stage2_unit%s&#39; % i)
+
+    # res4
+    unit = residual_unit(data=unit, num_filter=filter_list[2], stride=(2, 2), dim_match=False, name=&#39;stage3_unit1&#39;)
+    for i in range(2, units[2] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[2], stride=(1, 1), dim_match=True, name=&#39;stage3_unit%s&#39; % i)
+    return unit</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_test"><code class="name flex">
+<span>def <span class="ident">get_resnet_test</span></span>(<span>anchor_scales, anchor_ratios, rpn_feature_stride, rpn_pre_topk, rpn_post_topk, rpn_nms_thresh, rpn_min_size, num_classes, rcnn_feature_stride, rcnn_pooled_size, rcnn_batch_size, units, filter_list)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_resnet_test(anchor_scales, anchor_ratios, rpn_feature_stride,
+                    rpn_pre_topk, rpn_post_topk, rpn_nms_thresh, rpn_min_size,
+                    num_classes, rcnn_feature_stride, rcnn_pooled_size, rcnn_batch_size,
+                    units, filter_list):
+    num_anchors = len(anchor_scales) * len(anchor_ratios)
+
+    data = mx.symbol.Variable(name=&#34;data&#34;)
+    im_info = mx.symbol.Variable(name=&#34;im_info&#34;)
+
+    # shared convolutional layers
+    conv_feat = get_resnet_feature(data, units=units, filter_list=filter_list)
+
+    # rpn feature
+    rpn_conv = mx.symbol.Convolution(
+        data=conv_feat, kernel=(3, 3), pad=(1, 1), num_filter=512, name=&#34;rpn_conv_3x3&#34;)
+    rpn_relu = mx.symbol.Activation(data=rpn_conv, act_type=&#34;relu&#34;, name=&#34;rpn_relu&#34;)
+
+    # rpn classification
+    rpn_cls_score = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=2 * num_anchors, name=&#34;rpn_cls_score&#34;)
+    rpn_cls_score_reshape = mx.symbol.Reshape(
+        data=rpn_cls_score, shape=(0, 2, -1, 0), name=&#34;rpn_cls_score_reshape&#34;)
+    rpn_cls_act = mx.symbol.softmax(
+        data=rpn_cls_score_reshape, axis=1, name=&#34;rpn_cls_act&#34;)
+    rpn_cls_act_reshape = mx.symbol.Reshape(
+        data=rpn_cls_act, shape=(0, 2 * num_anchors, -1, 0), name=&#39;rpn_cls_act_reshape&#39;)
+
+    # rpn bbox regression
+    rpn_bbox_pred = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=4 * num_anchors, name=&#34;rpn_bbox_pred&#34;)
+
+    # rpn proposal
+    rois = mx.symbol.contrib.MultiProposal(
+        cls_prob=rpn_cls_act_reshape, bbox_pred=rpn_bbox_pred, im_info=im_info, name=&#39;rois&#39;,
+        feature_stride=rpn_feature_stride, scales=anchor_scales, ratios=anchor_ratios,
+        rpn_pre_nms_top_n=rpn_pre_topk, rpn_post_nms_top_n=rpn_post_topk,
+        threshold=rpn_nms_thresh, rpn_min_size=rpn_min_size)
+
+    # rcnn roi pool
+    roi_pool = mx.symbol.ROIPooling(
+        name=&#39;roi_pool&#39;, data=conv_feat, rois=rois, pooled_size=rcnn_pooled_size, spatial_scale=1.0 / rcnn_feature_stride)
+
+    # rcnn top feature
+    top_feat = get_resnet_top_feature(roi_pool, units=units, filter_list=filter_list)
+
+    # rcnn classification
+    cls_score = mx.symbol.FullyConnected(name=&#39;cls_score&#39;, data=top_feat, num_hidden=num_classes)
+    cls_prob = mx.symbol.softmax(name=&#39;cls_prob&#39;, data=cls_score)
+
+    # rcnn bbox regression
+    bbox_pred = mx.symbol.FullyConnected(name=&#39;bbox_pred&#39;, data=top_feat, num_hidden=num_classes * 4)
+
+    # reshape output
+    cls_prob = mx.symbol.Reshape(data=cls_prob, shape=(rcnn_batch_size, -1, num_classes), name=&#39;cls_prob_reshape&#39;)
+    bbox_pred = mx.symbol.Reshape(data=bbox_pred, shape=(rcnn_batch_size, -1, 4 * num_classes), name=&#39;bbox_pred_reshape&#39;)
+
+    # group output
+    group = mx.symbol.Group([rois, cls_prob, bbox_pred])
+    return group</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_top_feature"><code class="name flex">
+<span>def <span class="ident">get_resnet_top_feature</span></span>(<span>data, units, filter_list)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_resnet_top_feature(data, units, filter_list):
+    unit = residual_unit(data=data, num_filter=filter_list[3], stride=(2, 2), dim_match=False, name=&#39;stage4_unit1&#39;)
+    for i in range(2, units[3] + 1):
+        unit = residual_unit(data=unit, num_filter=filter_list[3], stride=(1, 1), dim_match=True, name=&#39;stage4_unit%s&#39; % i)
+    bn1 = mx.sym.BatchNorm(data=unit, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=&#39;bn1&#39;)
+    relu1 = mx.sym.Activation(data=bn1, act_type=&#39;relu&#39;, name=&#39;relu1&#39;)
+    pool1 = mx.symbol.Pooling(data=relu1, global_pool=True, kernel=(7, 7), pool_type=&#39;avg&#39;, name=&#39;pool1&#39;)
+    return pool1</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_train"><code class="name flex">
+<span>def <span class="ident">get_resnet_train</span></span>(<span>anchor_scales, anchor_ratios, rpn_feature_stride, rpn_pre_topk, rpn_post_topk, rpn_nms_thresh, rpn_min_size, rpn_batch_rois, num_classes, rcnn_feature_stride, rcnn_pooled_size, rcnn_batch_size, rcnn_batch_rois, rcnn_fg_fraction, rcnn_fg_overlap, rcnn_bbox_stds, units, filter_list)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_resnet_train(anchor_scales, anchor_ratios, rpn_feature_stride,
+                     rpn_pre_topk, rpn_post_topk, rpn_nms_thresh, rpn_min_size, rpn_batch_rois,
+                     num_classes, rcnn_feature_stride, rcnn_pooled_size, rcnn_batch_size,
+                     rcnn_batch_rois, rcnn_fg_fraction, rcnn_fg_overlap, rcnn_bbox_stds,
+                     units, filter_list):
+    num_anchors = len(anchor_scales) * len(anchor_ratios)
+
+    data = mx.symbol.Variable(name=&#34;data&#34;)
+    im_info = mx.symbol.Variable(name=&#34;im_info&#34;)
+    gt_boxes = mx.symbol.Variable(name=&#34;gt_boxes&#34;)
+    rpn_label = mx.symbol.Variable(name=&#39;label&#39;)
+    rpn_bbox_target = mx.symbol.Variable(name=&#39;bbox_target&#39;)
+    rpn_bbox_weight = mx.symbol.Variable(name=&#39;bbox_weight&#39;)
+
+    # shared convolutional layers
+    conv_feat = get_resnet_feature(data, units=units, filter_list=filter_list)
+
+    # rpn feature
+    rpn_conv = mx.symbol.Convolution(
+        data=conv_feat, kernel=(3, 3), pad=(1, 1), num_filter=512, name=&#34;rpn_conv_3x3&#34;)
+    rpn_relu = mx.symbol.Activation(data=rpn_conv, act_type=&#34;relu&#34;, name=&#34;rpn_relu&#34;)
+
+    # rpn classification
+    rpn_cls_score = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=2 * num_anchors, name=&#34;rpn_cls_score&#34;)
+    rpn_cls_score_reshape = mx.symbol.Reshape(
+        data=rpn_cls_score, shape=(0, 2, -1, 0), name=&#34;rpn_cls_score_reshape&#34;)
+    rpn_cls_prob = mx.symbol.SoftmaxOutput(data=rpn_cls_score_reshape, label=rpn_label, multi_output=True,
+                                           normalization=&#39;valid&#39;, use_ignore=True, ignore_label=-1, name=&#34;rpn_cls_prob&#34;)
+    rpn_cls_act = mx.symbol.softmax(
+        data=rpn_cls_score_reshape, axis=1, name=&#34;rpn_cls_act&#34;)
+    rpn_cls_act_reshape = mx.symbol.Reshape(
+        data=rpn_cls_act, shape=(0, 2 * num_anchors, -1, 0), name=&#39;rpn_cls_act_reshape&#39;)
+
+    # rpn bbox regression
+    rpn_bbox_pred = mx.symbol.Convolution(
+        data=rpn_relu, kernel=(1, 1), pad=(0, 0), num_filter=4 * num_anchors, name=&#34;rpn_bbox_pred&#34;)
+    rpn_bbox_loss_ = rpn_bbox_weight * mx.symbol.smooth_l1(name=&#39;rpn_bbox_loss_&#39;, scalar=3.0, data=(rpn_bbox_pred - rpn_bbox_target))
+    rpn_bbox_loss = mx.sym.MakeLoss(name=&#39;rpn_bbox_loss&#39;, data=rpn_bbox_loss_, grad_scale=1.0 / rpn_batch_rois)
+
+    # rpn proposal
+    rois = mx.symbol.contrib.MultiProposal(
+        cls_prob=rpn_cls_act_reshape, bbox_pred=rpn_bbox_pred, im_info=im_info, name=&#39;rois&#39;,
+        feature_stride=rpn_feature_stride, scales=anchor_scales, ratios=anchor_ratios,
+        rpn_pre_nms_top_n=rpn_pre_topk, rpn_post_nms_top_n=rpn_post_topk,
+        threshold=rpn_nms_thresh, rpn_min_size=rpn_min_size)
+
+    # rcnn roi proposal target
+    group = mx.symbol.Custom(rois=rois, gt_boxes=gt_boxes, op_type=&#39;proposal_target&#39;,
+                             num_classes=num_classes, batch_images=rcnn_batch_size,
+                             batch_rois=rcnn_batch_rois, fg_fraction=rcnn_fg_fraction,
+                             fg_overlap=rcnn_fg_overlap, box_stds=rcnn_bbox_stds)
+    rois = group[0]
+    label = group[1]
+    bbox_target = group[2]
+    bbox_weight = group[3]
+
+    # rcnn roi pool
+    roi_pool = mx.symbol.ROIPooling(
+        name=&#39;roi_pool&#39;, data=conv_feat, rois=rois, pooled_size=rcnn_pooled_size, spatial_scale=1.0 / rcnn_feature_stride)
+
+    # rcnn top feature
+    top_feat = get_resnet_top_feature(roi_pool, units=units, filter_list=filter_list)
+
+    # rcnn classification
+    cls_score = mx.symbol.FullyConnected(name=&#39;cls_score&#39;, data=top_feat, num_hidden=num_classes)
+    cls_prob = mx.symbol.SoftmaxOutput(name=&#39;cls_prob&#39;, data=cls_score, label=label, normalization=&#39;batch&#39;)
+
+    # rcnn bbox regression
+    bbox_pred = mx.symbol.FullyConnected(name=&#39;bbox_pred&#39;, data=top_feat, num_hidden=num_classes * 4)
+    bbox_loss_ = bbox_weight * mx.symbol.smooth_l1(name=&#39;bbox_loss_&#39;, scalar=1.0, data=(bbox_pred - bbox_target))
+    bbox_loss = mx.sym.MakeLoss(name=&#39;bbox_loss&#39;, data=bbox_loss_, grad_scale=1.0 / rcnn_batch_rois)
+
+    # reshape output
+    label = mx.symbol.Reshape(data=label, shape=(rcnn_batch_size, -1), name=&#39;label_reshape&#39;)
+    cls_prob = mx.symbol.Reshape(data=cls_prob, shape=(rcnn_batch_size, -1, num_classes), name=&#39;cls_prob_reshape&#39;)
+    bbox_loss = mx.symbol.Reshape(data=bbox_loss, shape=(rcnn_batch_size, -1, 4 * num_classes), name=&#39;bbox_loss_reshape&#39;)
+
+    # group output
+    group = mx.symbol.Group([rpn_cls_prob, rpn_bbox_loss, cls_prob, bbox_loss, mx.symbol.BlockGrad(label)])
+    return group</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.residual_unit"><code class="name flex">
+<span>def <span class="ident">residual_unit</span></span>(<span>data, num_filter, stride, dim_match, name)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def residual_unit(data, num_filter, stride, dim_match, name):
+    bn1 = mx.sym.BatchNorm(data=data, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=name + &#39;_bn1&#39;)
+    act1 = mx.sym.Activation(data=bn1, act_type=&#39;relu&#39;, name=name + &#39;_relu1&#39;)
+    conv1 = mx.sym.Convolution(data=act1, num_filter=int(num_filter * 0.25), kernel=(1, 1), stride=(1, 1), pad=(0, 0),
+                               no_bias=True, workspace=workspace, name=name + &#39;_conv1&#39;)
+    bn2 = mx.sym.BatchNorm(data=conv1, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=name + &#39;_bn2&#39;)
+    act2 = mx.sym.Activation(data=bn2, act_type=&#39;relu&#39;, name=name + &#39;_relu2&#39;)
+    conv2 = mx.sym.Convolution(data=act2, num_filter=int(num_filter * 0.25), kernel=(3, 3), stride=stride, pad=(1, 1),
+                               no_bias=True, workspace=workspace, name=name + &#39;_conv2&#39;)
+    bn3 = mx.sym.BatchNorm(data=conv2, fix_gamma=False, eps=eps, use_global_stats=use_global_stats, name=name + &#39;_bn3&#39;)
+    act3 = mx.sym.Activation(data=bn3, act_type=&#39;relu&#39;, name=name + &#39;_relu3&#39;)
+    conv3 = mx.sym.Convolution(data=act3, num_filter=num_filter, kernel=(1, 1), stride=(1, 1), pad=(0, 0), no_bias=True,
+                               workspace=workspace, name=name + &#39;_conv3&#39;)
+    if dim_match:
+        shortcut = data
+    else:
+        shortcut = mx.sym.Convolution(data=act1, num_filter=num_filter, kernel=(1, 1), stride=stride, no_bias=True,
+                                      workspace=workspace, name=name + &#39;_sc&#39;)
+    sum = mx.sym.ElementWiseSum(*[conv3, shortcut], name=name + &#39;_plus&#39;)
+    return sum</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symnet" href="index.html">3_mxrcnn.lib.mx-rcnn.symnet</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_feature" href="#3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_feature">get_resnet_feature</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_test" href="#3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_test">get_resnet_test</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_top_feature" href="#3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_top_feature">get_resnet_top_feature</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_train" href="#3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.get_resnet_train">get_resnet_train</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.residual_unit" href="#3_mxrcnn.lib.mx-rcnn.symnet.symbol_resnet.residual_unit">residual_unit</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

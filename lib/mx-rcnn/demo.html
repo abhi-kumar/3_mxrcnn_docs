@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>3_mxrcnn.lib.mx-rcnn.demo API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>3_mxrcnn.lib.mx-rcnn.demo</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import argparse
+import ast
+import pprint
+
+import mxnet as mx
+from mxnet.module import Module
+
+from symdata.bbox import im_detect
+from symdata.loader import load_test, generate_batch
+from symdata.vis import vis_detection
+from symnet.model import load_param, check_shape
+
+
+def demo_net(sym, class_names, args):
+    # print config
+    print(&#39;called with args\n{}&#39;.format(pprint.pformat(vars(args))))
+
+    # setup context
+    if args.gpu:
+        ctx = mx.gpu(int(args.gpu))
+    else:
+        ctx = mx.cpu(0)
+
+    # load single test
+    im_tensor, im_info, im_orig = load_test(args.image, short=args.img_short_side, max_size=args.img_long_side,
+                                            mean=args.img_pixel_means, std=args.img_pixel_stds)
+
+    # generate data batch
+    data_batch = generate_batch(im_tensor, im_info)
+
+    # load params
+    arg_params, aux_params = load_param(args.params, ctx=ctx)
+
+    # produce shape max possible
+    data_names = [&#39;data&#39;, &#39;im_info&#39;]
+    label_names = None
+    data_shapes = [(&#39;data&#39;, (1, 3, args.img_long_side, args.img_long_side)), (&#39;im_info&#39;, (1, 3))]
+    label_shapes = None
+
+    # check shapes
+    check_shape(sym, data_shapes, arg_params, aux_params)
+
+    # create and bind module
+    mod = Module(sym, data_names, label_names, context=ctx)
+    mod.bind(data_shapes, label_shapes, for_training=False)
+    mod.init_params(arg_params=arg_params, aux_params=aux_params)
+
+    # forward
+    mod.forward(data_batch)
+    rois, scores, bbox_deltas = mod.get_outputs()
+    rois = rois[:, 1:]
+    scores = scores[0]
+    bbox_deltas = bbox_deltas[0]
+    im_info = im_info[0]
+
+    # decode detection
+    det = im_detect(rois, scores, bbox_deltas, im_info,
+                    bbox_stds=args.rcnn_bbox_stds, nms_thresh=args.rcnn_nms_thresh,
+                    conf_thresh=args.rcnn_conf_thresh)
+
+    # print out
+    for [cls, conf, x1, y1, x2, y2] in det:
+        if cls &gt; 0 and conf &gt; args.vis_thresh:
+            print(class_names[int(cls)], conf, [x1, y1, x2, y2])
+
+    # if vis
+    if args.vis:
+        vis_detection(im_orig, det, class_names, thresh=args.vis_thresh)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description=&#39;Demonstrate a Faster R-CNN network&#39;,
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(&#39;--network&#39;, type=str, default=&#39;vgg16&#39;, help=&#39;base network&#39;)
+    parser.add_argument(&#39;--params&#39;, type=str, default=&#39;&#39;, help=&#39;path to trained model&#39;)
+    parser.add_argument(&#39;--dataset&#39;, type=str, default=&#39;voc&#39;, help=&#39;training dataset&#39;)
+    parser.add_argument(&#39;--image&#39;, type=str, default=&#39;&#39;, help=&#39;path to test image&#39;)
+    parser.add_argument(&#39;--gpu&#39;, type=str, default=&#39;&#39;, help=&#39;gpu device eg. 0&#39;)
+    parser.add_argument(&#39;--vis&#39;, action=&#39;store_true&#39;, help=&#39;display results&#39;)
+    parser.add_argument(&#39;--vis-thresh&#39;, type=float, default=0.7, help=&#39;threshold display boxes&#39;)
+    # faster rcnn params
+    parser.add_argument(&#39;--img-short-side&#39;, type=int, default=600)
+    parser.add_argument(&#39;--img-long-side&#39;, type=int, default=1000)
+    parser.add_argument(&#39;--img-pixel-means&#39;, type=str, default=&#39;(0.0, 0.0, 0.0)&#39;)
+    parser.add_argument(&#39;--img-pixel-stds&#39;, type=str, default=&#39;(1.0, 1.0, 1.0)&#39;)
+    parser.add_argument(&#39;--rpn-feat-stride&#39;, type=int, default=16)
+    parser.add_argument(&#39;--rpn-anchor-scales&#39;, type=str, default=&#39;(8, 16, 32)&#39;)
+    parser.add_argument(&#39;--rpn-anchor-ratios&#39;, type=str, default=&#39;(0.5, 1, 2)&#39;)
+    parser.add_argument(&#39;--rpn-pre-nms-topk&#39;, type=int, default=6000)
+    parser.add_argument(&#39;--rpn-post-nms-topk&#39;, type=int, default=300)
+    parser.add_argument(&#39;--rpn-nms-thresh&#39;, type=float, default=0.7)
+    parser.add_argument(&#39;--rpn-min-size&#39;, type=int, default=16)
+    parser.add_argument(&#39;--rcnn-num-classes&#39;, type=int, default=21)
+    parser.add_argument(&#39;--rcnn-feat-stride&#39;, type=int, default=16)
+    parser.add_argument(&#39;--rcnn-pooled-size&#39;, type=str, default=&#39;(14, 14)&#39;)
+    parser.add_argument(&#39;--rcnn-batch-size&#39;, type=int, default=1)
+    parser.add_argument(&#39;--rcnn-bbox-stds&#39;, type=str, default=&#39;(0.1, 0.1, 0.2, 0.2)&#39;)
+    parser.add_argument(&#39;--rcnn-nms-thresh&#39;, type=float, default=0.3)
+    parser.add_argument(&#39;--rcnn-conf-thresh&#39;, type=float, default=1e-3)
+    args = parser.parse_args()
+    args.img_pixel_means = ast.literal_eval(args.img_pixel_means)
+    args.img_pixel_stds = ast.literal_eval(args.img_pixel_stds)
+    args.rpn_anchor_scales = ast.literal_eval(args.rpn_anchor_scales)
+    args.rpn_anchor_ratios = ast.literal_eval(args.rpn_anchor_ratios)
+    args.rcnn_pooled_size = ast.literal_eval(args.rcnn_pooled_size)
+    args.rcnn_bbox_stds = ast.literal_eval(args.rcnn_bbox_stds)
+    return args
+
+
+def get_voc_names(args):
+    from symimdb.pascal_voc import PascalVOC
+    args.rcnn_num_classes = len(PascalVOC.classes)
+    return PascalVOC.classes
+
+
+def get_coco_names(args):
+    from symimdb.coco import coco
+    args.rcnn_num_classes = len(coco.classes)
+    return coco.classes
+
+
+def get_vgg16_test(args):
+    from symnet.symbol_vgg import get_vgg_test
+    if not args.params:
+        args.params = &#39;model/vgg16-0010.params&#39;
+    args.img_pixel_means = (123.68, 116.779, 103.939)
+    args.img_pixel_stds = (1.0, 1.0, 1.0)
+    args.net_fixed_params = [&#39;conv1&#39;, &#39;conv2&#39;]
+    args.rpn_feat_stride = 16
+    args.rcnn_feat_stride = 16
+    args.rcnn_pooled_size = (7, 7)
+    return get_vgg_test(anchor_scales=args.rpn_anchor_scales, anchor_ratios=args.rpn_anchor_ratios,
+                        rpn_feature_stride=args.rpn_feat_stride, rpn_pre_topk=args.rpn_pre_nms_topk,
+                        rpn_post_topk=args.rpn_post_nms_topk, rpn_nms_thresh=args.rpn_nms_thresh,
+                        rpn_min_size=args.rpn_min_size,
+                        num_classes=args.rcnn_num_classes, rcnn_feature_stride=args.rcnn_feat_stride,
+                        rcnn_pooled_size=args.rcnn_pooled_size, rcnn_batch_size=args.rcnn_batch_size)
+
+
+def get_resnet50_test(args):
+    from symnet.symbol_resnet import get_resnet_test
+    if not args.params:
+        args.params = &#39;model/resnet50-0010.params&#39;
+    args.img_pixel_means = (0.0, 0.0, 0.0)
+    args.img_pixel_stds = (1.0, 1.0, 1.0)
+    args.rpn_feat_stride = 16
+    args.rcnn_feat_stride = 16
+    args.rcnn_pooled_size = (14, 14)
+    return get_resnet_test(anchor_scales=args.rpn_anchor_scales, anchor_ratios=args.rpn_anchor_ratios,
+                           rpn_feature_stride=args.rpn_feat_stride, rpn_pre_topk=args.rpn_pre_nms_topk,
+                           rpn_post_topk=args.rpn_post_nms_topk, rpn_nms_thresh=args.rpn_nms_thresh,
+                           rpn_min_size=args.rpn_min_size,
+                           num_classes=args.rcnn_num_classes, rcnn_feature_stride=args.rcnn_feat_stride,
+                           rcnn_pooled_size=args.rcnn_pooled_size, rcnn_batch_size=args.rcnn_batch_size,
+                           units=(3, 4, 6, 3), filter_list=(256, 512, 1024, 2048))
+
+
+def get_resnet101_test(args):
+    from symnet.symbol_resnet import get_resnet_test
+    if not args.params:
+        args.params = &#39;model/resnet101-0010.params&#39;
+    args.img_pixel_means = (0.0, 0.0, 0.0)
+    args.img_pixel_stds = (1.0, 1.0, 1.0)
+    args.rpn_feat_stride = 16
+    args.rcnn_feat_stride = 16
+    args.rcnn_pooled_size = (14, 14)
+    return get_resnet_test(anchor_scales=args.rpn_anchor_scales, anchor_ratios=args.rpn_anchor_ratios,
+                           rpn_feature_stride=args.rpn_feat_stride, rpn_pre_topk=args.rpn_pre_nms_topk,
+                           rpn_post_topk=args.rpn_post_nms_topk, rpn_nms_thresh=args.rpn_nms_thresh,
+                           rpn_min_size=args.rpn_min_size,
+                           num_classes=args.rcnn_num_classes, rcnn_feature_stride=args.rcnn_feat_stride,
+                           rcnn_pooled_size=args.rcnn_pooled_size, rcnn_batch_size=args.rcnn_batch_size,
+                           units=(3, 4, 23, 3), filter_list=(256, 512, 1024, 2048))
+
+def get_class_names(dataset, args):
+    datasets = {
+        &#39;voc&#39;: get_voc_names,
+        &#39;coco&#39;: get_coco_names
+    }
+    if dataset not in datasets:
+        raise ValueError(&#34;dataset {} not supported&#34;.format(dataset))
+    return datasets[dataset](args)
+
+
+def get_network(network, args):
+    networks = {
+        &#39;vgg16&#39;: get_vgg16_test,
+        &#39;resnet50&#39;: get_resnet50_test,
+        &#39;resnet101&#39;: get_resnet101_test
+    }
+    if network not in networks:
+        raise ValueError(&#34;network {} not supported&#34;.format(network))
+    return networks[network](args)
+
+
+def main():
+    args = parse_args()
+    class_names = get_class_names(args.dataset, args)
+    sym = get_network(args.network, args)
+    demo_net(sym, class_names, args)
+
+
+if __name__ == &#39;__main__&#39;:
+    main()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.demo_net"><code class="name flex">
+<span>def <span class="ident">demo_net</span></span>(<span>sym, class_names, args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def demo_net(sym, class_names, args):
+    # print config
+    print(&#39;called with args\n{}&#39;.format(pprint.pformat(vars(args))))
+
+    # setup context
+    if args.gpu:
+        ctx = mx.gpu(int(args.gpu))
+    else:
+        ctx = mx.cpu(0)
+
+    # load single test
+    im_tensor, im_info, im_orig = load_test(args.image, short=args.img_short_side, max_size=args.img_long_side,
+                                            mean=args.img_pixel_means, std=args.img_pixel_stds)
+
+    # generate data batch
+    data_batch = generate_batch(im_tensor, im_info)
+
+    # load params
+    arg_params, aux_params = load_param(args.params, ctx=ctx)
+
+    # produce shape max possible
+    data_names = [&#39;data&#39;, &#39;im_info&#39;]
+    label_names = None
+    data_shapes = [(&#39;data&#39;, (1, 3, args.img_long_side, args.img_long_side)), (&#39;im_info&#39;, (1, 3))]
+    label_shapes = None
+
+    # check shapes
+    check_shape(sym, data_shapes, arg_params, aux_params)
+
+    # create and bind module
+    mod = Module(sym, data_names, label_names, context=ctx)
+    mod.bind(data_shapes, label_shapes, for_training=False)
+    mod.init_params(arg_params=arg_params, aux_params=aux_params)
+
+    # forward
+    mod.forward(data_batch)
+    rois, scores, bbox_deltas = mod.get_outputs()
+    rois = rois[:, 1:]
+    scores = scores[0]
+    bbox_deltas = bbox_deltas[0]
+    im_info = im_info[0]
+
+    # decode detection
+    det = im_detect(rois, scores, bbox_deltas, im_info,
+                    bbox_stds=args.rcnn_bbox_stds, nms_thresh=args.rcnn_nms_thresh,
+                    conf_thresh=args.rcnn_conf_thresh)
+
+    # print out
+    for [cls, conf, x1, y1, x2, y2] in det:
+        if cls &gt; 0 and conf &gt; args.vis_thresh:
+            print(class_names[int(cls)], conf, [x1, y1, x2, y2])
+
+    # if vis
+    if args.vis:
+        vis_detection(im_orig, det, class_names, thresh=args.vis_thresh)</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_class_names"><code class="name flex">
+<span>def <span class="ident">get_class_names</span></span>(<span>dataset, args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_class_names(dataset, args):
+    datasets = {
+        &#39;voc&#39;: get_voc_names,
+        &#39;coco&#39;: get_coco_names
+    }
+    if dataset not in datasets:
+        raise ValueError(&#34;dataset {} not supported&#34;.format(dataset))
+    return datasets[dataset](args)</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_coco_names"><code class="name flex">
+<span>def <span class="ident">get_coco_names</span></span>(<span>args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_coco_names(args):
+    from symimdb.coco import coco
+    args.rcnn_num_classes = len(coco.classes)
+    return coco.classes</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_network"><code class="name flex">
+<span>def <span class="ident">get_network</span></span>(<span>network, args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_network(network, args):
+    networks = {
+        &#39;vgg16&#39;: get_vgg16_test,
+        &#39;resnet50&#39;: get_resnet50_test,
+        &#39;resnet101&#39;: get_resnet101_test
+    }
+    if network not in networks:
+        raise ValueError(&#34;network {} not supported&#34;.format(network))
+    return networks[network](args)</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_resnet101_test"><code class="name flex">
+<span>def <span class="ident">get_resnet101_test</span></span>(<span>args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_resnet101_test(args):
+    from symnet.symbol_resnet import get_resnet_test
+    if not args.params:
+        args.params = &#39;model/resnet101-0010.params&#39;
+    args.img_pixel_means = (0.0, 0.0, 0.0)
+    args.img_pixel_stds = (1.0, 1.0, 1.0)
+    args.rpn_feat_stride = 16
+    args.rcnn_feat_stride = 16
+    args.rcnn_pooled_size = (14, 14)
+    return get_resnet_test(anchor_scales=args.rpn_anchor_scales, anchor_ratios=args.rpn_anchor_ratios,
+                           rpn_feature_stride=args.rpn_feat_stride, rpn_pre_topk=args.rpn_pre_nms_topk,
+                           rpn_post_topk=args.rpn_post_nms_topk, rpn_nms_thresh=args.rpn_nms_thresh,
+                           rpn_min_size=args.rpn_min_size,
+                           num_classes=args.rcnn_num_classes, rcnn_feature_stride=args.rcnn_feat_stride,
+                           rcnn_pooled_size=args.rcnn_pooled_size, rcnn_batch_size=args.rcnn_batch_size,
+                           units=(3, 4, 23, 3), filter_list=(256, 512, 1024, 2048))</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_resnet50_test"><code class="name flex">
+<span>def <span class="ident">get_resnet50_test</span></span>(<span>args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_resnet50_test(args):
+    from symnet.symbol_resnet import get_resnet_test
+    if not args.params:
+        args.params = &#39;model/resnet50-0010.params&#39;
+    args.img_pixel_means = (0.0, 0.0, 0.0)
+    args.img_pixel_stds = (1.0, 1.0, 1.0)
+    args.rpn_feat_stride = 16
+    args.rcnn_feat_stride = 16
+    args.rcnn_pooled_size = (14, 14)
+    return get_resnet_test(anchor_scales=args.rpn_anchor_scales, anchor_ratios=args.rpn_anchor_ratios,
+                           rpn_feature_stride=args.rpn_feat_stride, rpn_pre_topk=args.rpn_pre_nms_topk,
+                           rpn_post_topk=args.rpn_post_nms_topk, rpn_nms_thresh=args.rpn_nms_thresh,
+                           rpn_min_size=args.rpn_min_size,
+                           num_classes=args.rcnn_num_classes, rcnn_feature_stride=args.rcnn_feat_stride,
+                           rcnn_pooled_size=args.rcnn_pooled_size, rcnn_batch_size=args.rcnn_batch_size,
+                           units=(3, 4, 6, 3), filter_list=(256, 512, 1024, 2048))</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_vgg16_test"><code class="name flex">
+<span>def <span class="ident">get_vgg16_test</span></span>(<span>args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_vgg16_test(args):
+    from symnet.symbol_vgg import get_vgg_test
+    if not args.params:
+        args.params = &#39;model/vgg16-0010.params&#39;
+    args.img_pixel_means = (123.68, 116.779, 103.939)
+    args.img_pixel_stds = (1.0, 1.0, 1.0)
+    args.net_fixed_params = [&#39;conv1&#39;, &#39;conv2&#39;]
+    args.rpn_feat_stride = 16
+    args.rcnn_feat_stride = 16
+    args.rcnn_pooled_size = (7, 7)
+    return get_vgg_test(anchor_scales=args.rpn_anchor_scales, anchor_ratios=args.rpn_anchor_ratios,
+                        rpn_feature_stride=args.rpn_feat_stride, rpn_pre_topk=args.rpn_pre_nms_topk,
+                        rpn_post_topk=args.rpn_post_nms_topk, rpn_nms_thresh=args.rpn_nms_thresh,
+                        rpn_min_size=args.rpn_min_size,
+                        num_classes=args.rcnn_num_classes, rcnn_feature_stride=args.rcnn_feat_stride,
+                        rcnn_pooled_size=args.rcnn_pooled_size, rcnn_batch_size=args.rcnn_batch_size)</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.get_voc_names"><code class="name flex">
+<span>def <span class="ident">get_voc_names</span></span>(<span>args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_voc_names(args):
+    from symimdb.pascal_voc import PascalVOC
+    args.rcnn_num_classes = len(PascalVOC.classes)
+    return PascalVOC.classes</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main():
+    args = parse_args()
+    class_names = get_class_names(args.dataset, args)
+    sym = get_network(args.network, args)
+    demo_net(sym, class_names, args)</code></pre>
+</details>
+</dd>
+<dt id="3_mxrcnn.lib.mx-rcnn.demo.parse_args"><code class="name flex">
+<span>def <span class="ident">parse_args</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse_args():
+    parser = argparse.ArgumentParser(description=&#39;Demonstrate a Faster R-CNN network&#39;,
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(&#39;--network&#39;, type=str, default=&#39;vgg16&#39;, help=&#39;base network&#39;)
+    parser.add_argument(&#39;--params&#39;, type=str, default=&#39;&#39;, help=&#39;path to trained model&#39;)
+    parser.add_argument(&#39;--dataset&#39;, type=str, default=&#39;voc&#39;, help=&#39;training dataset&#39;)
+    parser.add_argument(&#39;--image&#39;, type=str, default=&#39;&#39;, help=&#39;path to test image&#39;)
+    parser.add_argument(&#39;--gpu&#39;, type=str, default=&#39;&#39;, help=&#39;gpu device eg. 0&#39;)
+    parser.add_argument(&#39;--vis&#39;, action=&#39;store_true&#39;, help=&#39;display results&#39;)
+    parser.add_argument(&#39;--vis-thresh&#39;, type=float, default=0.7, help=&#39;threshold display boxes&#39;)
+    # faster rcnn params
+    parser.add_argument(&#39;--img-short-side&#39;, type=int, default=600)
+    parser.add_argument(&#39;--img-long-side&#39;, type=int, default=1000)
+    parser.add_argument(&#39;--img-pixel-means&#39;, type=str, default=&#39;(0.0, 0.0, 0.0)&#39;)
+    parser.add_argument(&#39;--img-pixel-stds&#39;, type=str, default=&#39;(1.0, 1.0, 1.0)&#39;)
+    parser.add_argument(&#39;--rpn-feat-stride&#39;, type=int, default=16)
+    parser.add_argument(&#39;--rpn-anchor-scales&#39;, type=str, default=&#39;(8, 16, 32)&#39;)
+    parser.add_argument(&#39;--rpn-anchor-ratios&#39;, type=str, default=&#39;(0.5, 1, 2)&#39;)
+    parser.add_argument(&#39;--rpn-pre-nms-topk&#39;, type=int, default=6000)
+    parser.add_argument(&#39;--rpn-post-nms-topk&#39;, type=int, default=300)
+    parser.add_argument(&#39;--rpn-nms-thresh&#39;, type=float, default=0.7)
+    parser.add_argument(&#39;--rpn-min-size&#39;, type=int, default=16)
+    parser.add_argument(&#39;--rcnn-num-classes&#39;, type=int, default=21)
+    parser.add_argument(&#39;--rcnn-feat-stride&#39;, type=int, default=16)
+    parser.add_argument(&#39;--rcnn-pooled-size&#39;, type=str, default=&#39;(14, 14)&#39;)
+    parser.add_argument(&#39;--rcnn-batch-size&#39;, type=int, default=1)
+    parser.add_argument(&#39;--rcnn-bbox-stds&#39;, type=str, default=&#39;(0.1, 0.1, 0.2, 0.2)&#39;)
+    parser.add_argument(&#39;--rcnn-nms-thresh&#39;, type=float, default=0.3)
+    parser.add_argument(&#39;--rcnn-conf-thresh&#39;, type=float, default=1e-3)
+    args = parser.parse_args()
+    args.img_pixel_means = ast.literal_eval(args.img_pixel_means)
+    args.img_pixel_stds = ast.literal_eval(args.img_pixel_stds)
+    args.rpn_anchor_scales = ast.literal_eval(args.rpn_anchor_scales)
+    args.rpn_anchor_ratios = ast.literal_eval(args.rpn_anchor_ratios)
+    args.rcnn_pooled_size = ast.literal_eval(args.rcnn_pooled_size)
+    args.rcnn_bbox_stds = ast.literal_eval(args.rcnn_bbox_stds)
+    return args</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn" href="index.html">3_mxrcnn.lib.mx-rcnn</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.demo_net" href="#3_mxrcnn.lib.mx-rcnn.demo.demo_net">demo_net</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_class_names" href="#3_mxrcnn.lib.mx-rcnn.demo.get_class_names">get_class_names</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_coco_names" href="#3_mxrcnn.lib.mx-rcnn.demo.get_coco_names">get_coco_names</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_network" href="#3_mxrcnn.lib.mx-rcnn.demo.get_network">get_network</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_resnet101_test" href="#3_mxrcnn.lib.mx-rcnn.demo.get_resnet101_test">get_resnet101_test</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_resnet50_test" href="#3_mxrcnn.lib.mx-rcnn.demo.get_resnet50_test">get_resnet50_test</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_vgg16_test" href="#3_mxrcnn.lib.mx-rcnn.demo.get_vgg16_test">get_vgg16_test</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.get_voc_names" href="#3_mxrcnn.lib.mx-rcnn.demo.get_voc_names">get_voc_names</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.main" href="#3_mxrcnn.lib.mx-rcnn.demo.main">main</a></code></li>
+<li><code><a title="3_mxrcnn.lib.mx-rcnn.demo.parse_args" href="#3_mxrcnn.lib.mx-rcnn.demo.parse_args">parse_args</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
